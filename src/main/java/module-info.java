@@ -6,4 +6,6 @@ module dealer.dealerproject {
 
     opens dealer.dealerproject to javafx.fxml;
     exports dealer.dealerproject;
+    exports dealer.dealerproject.controller;
+    opens dealer.dealerproject.controller to javafx.fxml;
 }
