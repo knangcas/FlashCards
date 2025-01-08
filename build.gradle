@@ -56,3 +56,9 @@ jlink {
 jlinkZip {
     group = 'distribution'
 }
+
+task runApp(type: JavaExec) {
+    mainClass = 'dealer.dealerproject.MainWrapper'
+    classpath = sourceSets.main.runtimeClasspath
+    standardInput = System.in
+}
