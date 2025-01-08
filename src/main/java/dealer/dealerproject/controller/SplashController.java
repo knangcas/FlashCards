@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -31,11 +32,12 @@ public class SplashController {
     @FXML
     private AnchorPane splashAP;
 
+    @FXML
+    private Label invalidCredentials;
+
     Stage stage;
 
     Parent root;
-
-    Scene scene;
 
     @FXML
     public void logIn() {
@@ -49,6 +51,7 @@ public class SplashController {
             }
         } else {
             //show red text below login indicating incorrect password
+            invalidCredentials.setText("Invalid Credentials");
             System.out.println("Failed");
         }
 
