@@ -18,5 +18,6 @@
             <Button id="logout-button" fx:id="logOutButton" layoutX="1890.0" layoutY="27.0" mnemonicParsing="false" onAction="#logOut" prefHeight="25.0" prefWidth="70.0" text="Log Out" />
          </children>
       </Pane>
+      <Pane layoutX="46.0" layoutY="151.0" prefHeight="795.0" prefWidth="326.0" />
    </children>
 </AnchorPane>
