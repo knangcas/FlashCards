@@ -1,4 +1,4 @@
-package dealer.dealerproject;
+package dealer.dealerproject.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

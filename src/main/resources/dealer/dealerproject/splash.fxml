@@ -8,10 +8,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="splashAP" fx:id="splashAP" prefHeight="930.0" prefWidth="1343.0" stylesheets="@styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dealer.dealerproject.SplashController">
+<AnchorPane id="splashAP" fx:id="splashAP" prefHeight="333.0" prefWidth="960.0" stylesheets="@styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dealer.dealerproject.controller.SplashController">
    <children>
-      <Pane layoutX="278.0" layoutY="277.0" prefHeight="260.0" prefWidth="822.0">
+      <Pane layoutX="24.0" layoutY="37.0" prefHeight="273.0" prefWidth="913.0">
          <children>
             <TextField fx:id="usernameField" layoutX="411.0" layoutY="105.0" />
             <Label layoutX="354.0" layoutY="109.0" text="Username">
@@ -25,7 +24,7 @@
                </font>
             </Label>
             <PasswordField fx:id="passwordField" layoutX="411.0" layoutY="143.0" />
-            <Label id="welcome" fx:id="welcomeText" layoutX="354.0" layoutY="26.0" styleClass="splash-welcome" stylesheets="@styles/styles.css" text="Welcome" textFill="#b5a633">
+            <Label id="welcome" fx:id="welcomeText" layoutX="376.0" layoutY="28.0" prefHeight="53.0" prefWidth="185.0" styleClass="splash-welcome" stylesheets="@styles/styles.css" text="Welcome" textFill="#b5a633">
                <font>
                   <Font name="Calibri" size="45.0" />
                </font>
