@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane id="splashAP" fx:id="splashAP" prefHeight="333.0" prefWidth="357.0" stylesheets="@styles/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dealer.dealerproject.controller.SplashController">
+<AnchorPane id="splashAP" fx:id="splashAP" prefHeight="333.0" prefWidth="357.0" stylesheets="@styles/styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="flashcards.controller.SplashController">
    <children>
       <Pane layoutX="25.0" layoutY="37.0" prefHeight="271.0" prefWidth="298.0">
          <children>

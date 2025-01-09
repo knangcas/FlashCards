@@ -1,4 +1,4 @@
-package dealer.dealerproject.model;
+package flashcards.model;
 
 public class User {
 

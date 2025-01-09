@@ -1,6 +1,6 @@
-package dealer.dealerproject;
+package flashcards;
 
-import dealer.dealerproject.model.User;
+import flashcards.model.User;
 
 import java.util.HashMap;
 

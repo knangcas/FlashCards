@@ -1,7 +1,7 @@
-package dealer.dealerproject.controller;
+package flashcards.controller;
 
-import dealer.dealerproject.HelloApplication;
-import dealer.dealerproject.UserManagement;
+import flashcards.HelloApplication;
+import flashcards.UserManagement;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

@@ -4,8 +4,8 @@ module dealer.dealerproject {
 
     requires org.kordamp.bootstrapfx.core;
 
-    opens dealer.dealerproject to javafx.fxml;
-    exports dealer.dealerproject;
-    exports dealer.dealerproject.controller;
-    opens dealer.dealerproject.controller to javafx.fxml;
+    opens flashcards to javafx.fxml;
+    exports flashcards;
+    exports flashcards.controller;
+    opens flashcards.controller to javafx.fxml;
 }

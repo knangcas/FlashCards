@@ -1,4 +1,4 @@
-package dealer.dealerproject;
+package flashcards;
 
 public class MainWrapper {
 
