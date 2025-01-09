@@ -51,9 +51,12 @@ public class MainPageController {
     }
 
     public void testButton(ActionEvent actionEvent) throws IOException {
-        AnchorPane loader = FXMLLoader.load(HelloApplication.class.getResource("test.fxml"));
-
-        borderPane.setCenter(loader);
+        //AnchorPane loader = FXMLLoader.load(HelloApplication.class.getResource("FlashCardWindow.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("FlashCardWindow.fxml"));
+        AnchorPane l = fxmlLoader.load();
+        FlashCardWindowController flashCardWindowController = fxmlLoader.getController();
+        flashCardWindowController.initializeDeck(null);
+        borderPane.setCenter(l);
 
 
     }

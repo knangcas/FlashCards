@@ -25,8 +25,8 @@ tasks.withType(JavaCompile) {
 }
 
 application {
-    mainModule = 'dealer.dealerproject'
-    mainClass = 'dealer.dealerproject.HelloApplication'
+    mainModule = 'flashcards'
+    mainClass = 'flashcards.HelloApplication'
 }
 
 javafx {
@@ -58,7 +58,7 @@ jlinkZip {
 }
 
 task runApp(type: JavaExec) {
-    mainClass = 'dealer.dealerproject.MainWrapper'
+    mainClass = 'flashcards.MainWrapper'
     classpath = sourceSets.main.runtimeClasspath
     standardInput = System.in
 }

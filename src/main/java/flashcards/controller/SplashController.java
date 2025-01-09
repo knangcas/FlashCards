@@ -65,7 +65,7 @@ public class SplashController {
 
         mpc.setWelcomeText(usernameField.getText());
         stage = new Stage();
-        stage.setTitle("Dealership Management");
+        stage.setTitle("FlashCards");
         stage.setScene(new Scene(root));
         stage.show();
 
