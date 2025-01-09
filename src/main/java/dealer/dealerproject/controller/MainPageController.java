@@ -8,6 +8,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.SplitPane;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -17,9 +20,18 @@ public class MainPageController {
     @FXML
     private Label welcomeText;
 
+
+
+    @FXML
+    private BorderPane borderPane;
+
+
+
+
     public void setWelcomeText(String username) {
         welcomeText.setText("Welcome, " + username + "!");
     }
+
 
 
 
@@ -35,6 +47,14 @@ public class MainPageController {
         stage.show();
 
         ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
+
+
+    }
+
+    public void testButton(ActionEvent actionEvent) throws IOException {
+        AnchorPane loader = FXMLLoader.load(HelloApplication.class.getResource("test.fxml"));
+
+        borderPane.setCenter(loader);
 
 
     }
