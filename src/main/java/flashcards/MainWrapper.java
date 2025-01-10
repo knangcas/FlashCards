@@ -1,8 +1,5 @@
 package flashcards;
 
-import flashcards.Services.UserService;
-import flashcards.Services.impl.SQLimpl;
-
 import java.sql.SQLException;
 
 public class MainWrapper {

@@ -1,6 +1,6 @@
 package flashcards.Services;
 
-import flashcards.Services.impl.SQLimpl;
+import flashcards.Services.impl.UserService.SQLimpl;
 import flashcards.model.User;
 
 import java.sql.SQLException;
@@ -20,10 +20,10 @@ public interface UserService {
 
     public User getUser(String username) throws SQLException;
 
-    public User createUser(String username, String password);
+    public User createUser(String username, String password) throws SQLException;
 
 
-    public User updateUserPassword(String username, String password);
+    public User updateUserPassword(String username, String password) throws SQLException;
 
     public User deleteUser(String username);
 

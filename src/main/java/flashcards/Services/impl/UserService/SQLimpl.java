@@ -1,4 +1,4 @@
-package flashcards.Services.impl;
+package flashcards.Services.impl.UserService;
 
 import flashcards.Services.UserService;
 import flashcards.model.User;
@@ -78,20 +78,71 @@ public class SQLimpl implements UserService {
     }
 
     @Override
-    public User createUser(String username, String password) {
+    public User createUser(String username, String password) throws SQLException {
+
         connect();
-        String query = "UPDATE USERS SET password = ? WHERE username = ?";
+        String query = "INSERT INTO USERS VALUES (?, ?)";
         PreparedStatement preparedStatement = null;
-        return null;
+        //prepared for anti sql injection
+
+        try {
+            preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, password);
+            System.out.println(preparedStatement.executeUpdate());
+            conn.commit();
+        } catch (SQLIntegrityConstraintViolationException e) {
+            System.out.println("Username already exists");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            //TODO
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return getUser(username);
     }
 
     @Override
-    public User updateUserPassword(String username, String password) {
-        return null;
+    public User updateUserPassword(String username, String password) throws SQLException {
+        connect();
+        String query = "UPDATE USERS SET password = ? WHERE username = ?";
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setString(1, password);
+            preparedStatement.setString(2, username);
+            if (preparedStatement.executeUpdate() == 0) {
+                throw new SQLException();
+            }
+            conn.commit();
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            //TODO
+        }  finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return getUser(username);
     }
 
     @Override
     public User deleteUser(String username) {
+        //TODO
+        //cascade effect, because cards FK = deck, and deck FK = user.
+        //delete user = delete cards, decks, then user.
+
+
         return null;
     }
 }
