@@ -83,9 +83,7 @@ public class FlashCardDeck{
         resetDeck();
     }
 
-    public void addCard(FlashCard card) {
-        deck.push(card);
-    }
+
 
     private void resetDeck() {
         if (shuffle1.size() > 0) {

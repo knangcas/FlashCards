@@ -1,6 +1,7 @@
 package flashcards.Services.impl.UserService;
 
 import flashcards.Services.UserService;
+import flashcards.Services.impl.SQLVariables;
 import flashcards.model.User;
 import java.sql.*;
 
@@ -8,13 +9,6 @@ import java.sql.*;
 import java.util.List;
 
 public class SQLUserImpl implements UserService {
-    final String URL = "com.mysql.cj.jdbc.Driver";
-
-    final String SQLADDRESS = "jdbc:mysql://localhost:3306/flashcards";
-    //this just connects to local sql server because AWS = $$
-    final String SQLUSER = "root";
-
-    final String SQLPASSWORD = "password2!";
 
     Connection conn;
 
@@ -25,7 +19,7 @@ public class SQLUserImpl implements UserService {
 
     private void connect() {
         try {
-            conn = DriverManager.getConnection(SQLADDRESS, SQLUSER, SQLPASSWORD);
+            conn = DriverManager.getConnection(SQLVariables.SQLADDRESS, SQLVariables.SQLUSER, SQLVariables.SQLPASSWORD);
             conn.setAutoCommit(false);
         } catch (SQLException e) {
             System.out.println("could not connect");

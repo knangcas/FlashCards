@@ -5,6 +5,26 @@ public class FlashCard {
     private String question;
     private String answer;
 
+    private String deckID;
+
+    private String cardID;
+
+    public String getDeckID() {
+        return deckID;
+    }
+
+    public void setDeckID(String deckID) {
+        this.deckID = deckID;
+    }
+
+    public String getCardID() {
+        return cardID;
+    }
+
+    public void setCardID(String cardID) {
+        this.cardID = cardID;
+    }
+
     public boolean isQuestionSide() {
         return questionSide;
     }
