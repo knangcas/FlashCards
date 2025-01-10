@@ -1,6 +1,6 @@
 package flashcards.Services;
 
-import flashcards.Services.impl.UserService.SQLimpl;
+import flashcards.Services.impl.UserService.SQLUserImpl;
 import flashcards.model.User;
 
 import java.sql.SQLException;
@@ -11,7 +11,7 @@ public interface UserService {
 
     public static UserService getInstance(String service) throws SQLException {
         if (service.equals("SQL")) {
-            return new SQLimpl();
+            return new SQLUserImpl();
         }
         return null;
     }

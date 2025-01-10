@@ -17,15 +17,23 @@ public class FlashCardDeck{
 
     private Stack<FlashCard> incorrect;
 
-    private Queue<FlashCard> skipped = new LinkedList<>();
+    private Queue<FlashCard> skipped;
 
     private int size;
 
     private int totalCards;
 
-
+    private String deckID;
 
     private String name;
+
+    public String getDeckID() {
+        return deckID;
+    }
+
+    public void setDeckID(String deckID) {
+        this.deckID = deckID;
+    }
 
     public void addFlashCard(FlashCard card) {
         deck.push(card);
@@ -43,6 +51,8 @@ public class FlashCardDeck{
         correct = new Stack<>();
 
         incorrect = new Stack<>();
+
+        skipped = new LinkedList<>();
     }
 
     public int getTotalCards(){

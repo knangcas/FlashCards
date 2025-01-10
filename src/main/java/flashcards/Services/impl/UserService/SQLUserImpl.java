@@ -7,7 +7,7 @@ import java.sql.*;
 
 import java.util.List;
 
-public class SQLimpl implements UserService {
+public class SQLUserImpl implements UserService {
     final String URL = "com.mysql.cj.jdbc.Driver";
 
     final String SQLADDRESS = "jdbc:mysql://localhost:3306/flashcards";
@@ -19,7 +19,7 @@ public class SQLimpl implements UserService {
     Connection conn;
 
 
-    public SQLimpl() throws SQLException {
+    public SQLUserImpl() throws SQLException {
 
     }
 
