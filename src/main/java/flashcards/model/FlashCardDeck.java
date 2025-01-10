@@ -1,5 +1,8 @@
 package flashcards.model;
 
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Random;
 import java.util.Stack;
 
 public class FlashCardDeck{
@@ -14,7 +17,11 @@ public class FlashCardDeck{
 
     private Stack<FlashCard> incorrect;
 
+    private Queue<FlashCard> skipped = new LinkedList<>();
+
     private int size;
+
+    private int totalCards;
 
 
 
@@ -38,8 +45,62 @@ public class FlashCardDeck{
         incorrect = new Stack<>();
     }
 
+    public int getTotalCards(){
+        return deck.size() + shuffle1.size() + shuffle2.size() + correct.size() + incorrect.size() + skipped.size();
+    }
+
     public int getSize() {
         return deck.size();
+    }
+
+    public void shuffle() {
+        resetDeck();
+        Random rand = new Random();
+
+
+        while (deck.size() > 0) {
+            int n1 = rand.nextInt(100);
+            int n2 = rand.nextInt(100);
+
+            if (n1>n2) {
+                shuffle1.push(deck.pop());
+            } else if (n2<n1) {
+                shuffle2.push(deck.pop());
+            } else {
+                correct.push(deck.pop());
+            }
+        }
+        resetDeck();
+    }
+
+    public void addCard(FlashCard card) {
+        deck.push(card);
+    }
+
+    private void resetDeck() {
+        if (shuffle1.size() > 0) {
+            resetDeckHelper(shuffle1);
+        }
+        if (shuffle2.size() > 0) {
+            resetDeckHelper(shuffle2);
+        }
+        if (correct.size() > 0) {
+            resetDeckHelper(correct);
+        }
+        if (incorrect.size() > 0 ) {
+            resetDeckHelper(incorrect);
+        }
+        if (skipped.size() > 0) {
+            while (skipped.size()>0) {
+                deck.push(skipped.remove());
+            }
+        }
+    }
+
+    private void resetDeckHelper(Stack<FlashCard> cards) {
+        for (int i = 0; i < cards.size() ; i++) {
+            deck.push(cards.pop());
+        }
     }
 
 
