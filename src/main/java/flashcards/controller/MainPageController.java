@@ -13,6 +13,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class MainPageController {
 
@@ -40,17 +41,23 @@ public class MainPageController {
         Parent root;
         root = fxmlLoader.load();
 
+        //loads splash into root
+
         Stage stage = new Stage();
         stage.setTitle("Welcome");
         stage.setScene(new Scene(root));
+        //sets scene to root
         stage.show();
 
+        //shows stage
+
         ((Node)(actionEvent.getSource())).getScene().getWindow().hide();
+        //hides window from which the event took place
 
 
     }
 
-    public void testButton(ActionEvent actionEvent) throws IOException {
+    public void testButton(ActionEvent actionEvent) throws IOException, SQLException {
         //AnchorPane loader = FXMLLoader.load(HelloApplication.class.getResource("FlashCardWindow.fxml"));
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("FlashCardWindow.fxml"));
         AnchorPane l = fxmlLoader.load();

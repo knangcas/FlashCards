@@ -7,7 +7,7 @@ import java.util.Stack;
 
 public class FlashCardDeck{
 
-    private Stack<FlashCard> deck = new Stack<>();
+    private Stack<FlashCard> deck;
 
     private Stack<FlashCard> shuffle1;
 
@@ -54,6 +54,33 @@ public class FlashCardDeck{
 
         skipped = new LinkedList<>();
     }
+
+    public FlashCard getCard() {
+        if (!deck.isEmpty()) {
+            return deck.peek();
+        }
+
+        return null;
+    }
+
+
+    public void skipCard() {
+        skipped.add(deck.pop());
+    }
+
+    public void correctChoice() {
+        correct.push(deck.pop());
+    }
+
+    public void incorrectChoice() {
+        incorrect.push(deck.pop());
+    }
+
+
+    public boolean isEmpty() {
+        return deck.isEmpty();
+    }
+
 
     public int getTotalCards(){
         return deck.size() + shuffle1.size() + shuffle2.size() + correct.size() + incorrect.size() + skipped.size();

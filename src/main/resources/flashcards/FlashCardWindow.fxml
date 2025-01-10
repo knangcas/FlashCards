@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="649.0" prefWidth="1035.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="flashcards.controller.FlashCardWindowController">
+<AnchorPane prefHeight="649.0" prefWidth="1035.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="flashcards.controller.FlashCardWindowController">
    <children>
       <Label fx:id="deckNameLabel" layoutX="43.0" layoutY="23.0" text="DeckName">
          <font>
@@ -17,9 +17,10 @@
             <Label fx:id="contentLabel" layoutX="84.0" layoutY="105.0" prefHeight="17.0" prefWidth="719.0" text="Question" />
          </children>
       </Pane>
-      <Button layoutX="922.0" layoutY="585.0" mnemonicParsing="false" text="Next" />
-      <Button layoutX="803.0" layoutY="585.0" mnemonicParsing="false" text="Skip" />
-      <Button layoutX="674.0" layoutY="585.0" mnemonicParsing="false" text="Restart" />
-      <Label fx:id="progressLabel" layoutX="908.0" layoutY="81.0" prefHeight="17.0" prefWidth="138.0" text="Card x of x" />
+      <Button fx:id="nextButton" layoutX="922.0" layoutY="585.0" mnemonicParsing="false" onAction="#nextCard" text="Next" />
+      <Button fx:id="skipButton" layoutX="800.0" layoutY="585.0" mnemonicParsing="false" onAction="#skipCard" text="Skip" />
+      <Button fx:id="restartButton" layoutX="626.0" layoutY="585.0" mnemonicParsing="false" onAction="#shuffleAndRestart" text="Shuffle &amp; Restart" />
+      <Label fx:id="progressLabel" layoutX="908.0" layoutY="83.0" prefHeight="17.0" prefWidth="138.0" text="Card X of X" />
+      <Label fx:id="skippedLabel" layoutX="770.0" layoutY="83.0" prefHeight="17.0" prefWidth="138.0" text="Skipped x Cards" />
    </children>
 </AnchorPane>

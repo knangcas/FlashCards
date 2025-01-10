@@ -28,7 +28,7 @@ public class UserManagement {
 
         //TODO salt passwords
 
-        UserService userService = UserService.getInstance("SQL");
+        UserService userService = UserService.getInstance(MainWrapper.SERVICE);
 
         User user = null;
         if (userService != null) {
