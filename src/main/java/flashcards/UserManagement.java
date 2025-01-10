@@ -1,7 +1,9 @@
 package flashcards;
 
+import flashcards.Services.UserService;
 import flashcards.model.User;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 
 public class UserManagement {
@@ -20,8 +22,31 @@ public class UserManagement {
 
     }
 
-    public static boolean validateUser(String username, String password) {
-        if (userMap.containsKey(username)) {
+    public static boolean validateUser(String username, String password) throws SQLException {
+
+        //TODO salt passwords
+
+        UserService userService = UserService.getInstance("SQL");
+        User user = null;
+        if (userService != null) {
+            user = userService.getUser(username);
+            if (user != null) {
+                if (user.getPassword().equals(password)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+
+        return false;
+
+
+
+
+        /*if (userMap.containsKey(username)) {
             if (userMap.get(username).equals(password)) {
                 return true;
             } else {
@@ -29,7 +54,7 @@ public class UserManagement {
             }
         } else {
             return false;
-        }
+        }*/
     }
 
 

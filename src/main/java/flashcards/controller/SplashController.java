@@ -15,6 +15,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class SplashController {
     @FXML
@@ -40,7 +41,7 @@ public class SplashController {
     Parent root;
 
     @FXML
-    public void logIn() {
+    public void logIn() throws SQLException {
         if (UserManagement.validateUser(usernameField.getText(), passwordField.getText())) {
             //switch scene, log in to app
             System.out.println("Logged in");
