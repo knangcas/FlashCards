@@ -3,6 +3,8 @@ package flashcards.Services.impl.UserService;
 import flashcards.Services.UserService;
 import flashcards.Services.impl.SQLVariables;
 import flashcards.model.User;
+import flashcards.model.exception.FlashcardsConnectionException;
+
 import java.sql.*;
 
 
@@ -22,7 +24,7 @@ public class SQLUserImpl implements UserService {
             conn = DriverManager.getConnection(SQLVariables.SQLADDRESS, SQLVariables.SQLUSER, SQLVariables.SQLPASSWORD);
             conn.setAutoCommit(false);
         } catch (SQLException e) {
-            System.out.println("could not connect");
+            throw new FlashcardsConnectionException("Failed to connect");
         }
 
     }
@@ -33,7 +35,11 @@ public class SQLUserImpl implements UserService {
 
     @Override
     public User getUser(String username) throws SQLException {
-        connect();
+        try {
+            connect();
+        } catch (FlashcardsConnectionException e) {
+            throw new FlashcardsConnectionException("");
+        }
         User rval = null;
         String password;
         String query = "SELECT * FROM USERS WHERE username = ?";

@@ -2,6 +2,7 @@ package flashcards;
 
 import flashcards.Services.UserService;
 import flashcards.model.User;
+import flashcards.model.exception.FlashcardsConnectionException;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -32,7 +33,11 @@ public class UserManagement {
 
         User user = null;
         if (userService != null) {
-            user = userService.getUser(username);
+            try {
+                user = userService.getUser(username);
+            } catch (FlashcardsConnectionException e) {
+                throw new FlashcardsConnectionException();
+            }
             if (user != null) {
                 if (user.getPassword().equals(password)) {
                     return true;

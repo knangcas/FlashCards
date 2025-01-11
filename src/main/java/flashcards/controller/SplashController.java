@@ -2,6 +2,7 @@ package flashcards.controller;
 
 import flashcards.HelloApplication;
 import flashcards.UserManagement;
+import flashcards.model.exception.FlashcardsConnectionException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -42,18 +43,22 @@ public class SplashController {
 
     @FXML
     public void logIn() throws SQLException {
-        if (UserManagement.validateUser(usernameField.getText(), passwordField.getText())) {
-            //switch scene, log in to app
-            System.out.println("Logged in");
-            try {
-                switchToMain();
-            } catch (IOException exception) {
-                System.out.println("Error occured, no such window exists");
+        try {
+            if (UserManagement.validateUser(usernameField.getText(), passwordField.getText())) {
+                //switch scene, log in to app
+                System.out.println("Logged in");
+                try {
+                    switchToMain();
+                } catch (IOException exception) {
+                    System.out.println("Error occured, no such window exists");
+                }
+            } else {
+                //show red text below login indicating incorrect password
+                invalidCredentials.setText("Invalid Credentials");
+                System.out.println("Failed");
             }
-        } else {
-            //show red text below login indicating incorrect password
-            invalidCredentials.setText("Invalid Credentials");
-            System.out.println("Failed");
+        } catch (FlashcardsConnectionException e) {
+            invalidCredentials.setText("Unable to connect.");
         }
 
     }
@@ -81,5 +86,8 @@ public class SplashController {
     public void exit(ActionEvent event) {
         stage = (Stage) splashAP.getScene().getWindow();
         stage.close();
+    }
+
+    public void offlineMode(ActionEvent actionEvent) {
     }
 }

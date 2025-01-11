@@ -1,5 +1,5 @@
 .splash-welcome {
-    -fx-background-color: #FFFFFF;
+
     -fx-text-fill: #00d375;
 
 }
@@ -12,14 +12,26 @@
     -fx-background-color: white;
 }
 
+#fcMainPane {
+    -fx-border-width: 5;
+    -fx-border-radius: 10;
+    -fx-border-style: solid;
+}
+
+#menuPane {
+    -fx-border-width: 5;
+    -fx-border-radius: 10;
+    -fx-border-style: solid;
+}
 
 
-.buttons {
+.button {
     -fx-text-fill: black;
     -fx-background-color: #00d375;
     -fx-border-radius: 10;
     -fx-background-radius: 10;
     -fx-padding: 5;
+
 
 
 }
