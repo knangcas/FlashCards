@@ -49,6 +49,7 @@ public class SplashController {
                 System.out.println("Logged in");
                 try {
                     switchToMain();
+
                 } catch (IOException exception) {
                     System.out.println("Error occured, no such window exists");
                 }
@@ -63,13 +64,13 @@ public class SplashController {
 
     }
 
-    private void switchToMain() throws IOException {
+    private void switchToMain() throws IOException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("MainPage.fxml"));
         root = fxmlLoader.load();
 
         MainPageController mpc = fxmlLoader.getController();
-
-        mpc.setWelcomeText(usernameField.getText());
+        //mpc.setWelcomeText(usernameField.getText());
+        mpc.initialize(UserManagement.getActiveUser());
         stage = new Stage();
         stage.setTitle("FlashCards");
         stage.setScene(new Scene(root));

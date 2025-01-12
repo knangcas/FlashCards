@@ -9,6 +9,8 @@ import java.util.HashMap;
 
 public class UserManagement {
 
+    private static User activeUser;
+
     private static HashMap<String, String> userMap;
     public static void loadUsers() {
 
@@ -23,7 +25,9 @@ public class UserManagement {
 
     }
 
-
+    public static User getActiveUser() {
+        return activeUser;
+    }
 
     public static boolean validateUser(String username, String password) throws SQLException {
 
@@ -40,6 +44,7 @@ public class UserManagement {
             }
             if (user != null) {
                 if (user.getPassword().equals(password)) {
+                    activeUser = user;
                     return true;
                 } else {
                     return false;

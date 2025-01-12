@@ -4,8 +4,11 @@ import flashcards.Services.DeckService;
 import flashcards.Services.impl.SQLVariables;
 import flashcards.model.FlashCard;
 import flashcards.model.FlashCardDeck;
+import flashcards.model.User;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SQLDeckImpl implements DeckService {
 
@@ -20,8 +23,9 @@ public class SQLDeckImpl implements DeckService {
         } catch (SQLException e) {
             System.out.println("could not connect");
         }
-
     }
+
+
 
     @Override
     public FlashCardDeck getDeck(String deckID) throws SQLException {
@@ -69,6 +73,32 @@ public class SQLDeckImpl implements DeckService {
             }
         }
 
+
+        return rval;
+    }
+
+    @Override
+    public List<String> getDecks(User user) {
+        connect();
+        List<String> rval = new ArrayList<>();
+
+
+        ResultSet resultSet = null;
+        PreparedStatement preparedStatement = null;
+        String query = "SELECT decks.deckID, decks.deckName FROM USERS INNER JOIN DECKS " +
+                "ON users.username = decks.username WHERE users.username =?";
+
+        try {
+            preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setString(1, user.getUsername());
+            resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()) {
+                rval.add((resultSet.getString(1)));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+            //TODO throw up callstack
+        }
 
         return rval;
     }
