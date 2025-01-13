@@ -24,7 +24,7 @@
             <Pane fx:id="menuPane" prefHeight="858.0" prefWidth="192.0" BorderPane.alignment="CENTER">
                <children>
                   <Button layoutX="49.0" layoutY="64.0" mnemonicParsing="false" onAction="#testButton" prefHeight="27.0" prefWidth="94.0" text="test" />
-                  <Button layoutX="49.0" layoutY="114.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="94.0" text="Manage Decks" />
+                  <Button layoutX="49.0" layoutY="114.0" mnemonicParsing="false" onAction="#manageDecks" prefHeight="27.0" prefWidth="94.0" text="Manage Decks" />
                   <Button layoutX="48.0" layoutY="171.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="96.0" text="Button" />
                </children>
             </Pane>

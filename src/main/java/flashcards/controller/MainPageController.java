@@ -1,6 +1,9 @@
 package flashcards.controller;
 
 import flashcards.HelloApplication;
+import flashcards.MainWrapper;
+import flashcards.Services.DeckService;
+import flashcards.model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +17,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainPageController {
 
@@ -25,6 +30,8 @@ public class MainPageController {
     @FXML
     private BorderPane borderPane;
 
+    private User loggedInUser;
+
 
 
 
@@ -32,7 +39,18 @@ public class MainPageController {
         welcomeText.setText("Welcome, " + username + "!");
     }
 
+    public void initialize(User user) throws SQLException {
+        DeckService deckService = DeckService.getInstance(MainWrapper.SERVICE);
+        loggedInUser = user;
+        welcomeText.setText("Welcome, " + loggedInUser.getUsername() + "!");
+        List<String> decks = deckService.getDecks(user);
 
+        for (String deckID : decks) {
+            user.addDeck(deckID, deckService.getDeck(deckID));
+        }
+
+
+    }
 
 
     @FXML
@@ -48,6 +66,7 @@ public class MainPageController {
         stage.setScene(new Scene(root));
         //sets scene to root
         stage.show();
+        loggedInUser = null;
 
         //shows stage
 
@@ -66,5 +85,13 @@ public class MainPageController {
         borderPane.setCenter(l);
 
 
+    }
+
+    public void manageDecks(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("ManageFlash.fxml"));
+        AnchorPane l = fxmlLoader.load();
+        ManageFlashController manageFlashController = fxmlLoader.getController();
+        manageFlashController.initialize(loggedInUser);
+        borderPane.setCenter(l);
     }
 }
