@@ -97,6 +97,7 @@ public class ManageFlashController {
                     currentDeckLabel.setText("Current Deck: " + currentDeck.getName());
                     cardListPane.setVisible(true);
                     cardList.setVisible(true);
+                    populateCards();
 
                 }
             }
@@ -104,8 +105,13 @@ public class ManageFlashController {
 
     }
 
-    private void populateCards(FlashCardDeck deck) {
+    private void populateCards() {
 
+
+        //TODO have to populate cards
+        //easiest way i can think of is make another list
+        //within deck that has a copy of all of the cards
+        //within the internal stacks of the data structure
 
 
     }
