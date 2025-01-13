@@ -2,6 +2,7 @@ package flashcards.controller;
 
 import flashcards.MainWrapper;
 import flashcards.Services.DeckService;
+import flashcards.model.FlashCard;
 import flashcards.model.FlashCardDeck;
 import flashcards.model.User;
 import javafx.beans.value.ChangeListener;
@@ -9,6 +10,8 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.Pane;
 
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +33,31 @@ public class ManageFlashController {
     @FXML
     private ListView cardList;
 
+    @FXML
+    private Label currentDeckLabel;
+
+    @FXML
+    private Label quantityCardLabel;
+
+    @FXML
+    private TextArea questionTextArea;
+
+    @FXML
+    private TextArea answerTextArea;
+
+    @FXML
+    private Label questionLabel;
+
+    @FXML
+    private Label answerLabel;
+
+    @FXML
+    private Pane cardPane;
+
+    @FXML
+    private Pane cardListPane;
+
+
 
 
 
@@ -38,6 +66,8 @@ public class ManageFlashController {
         deckService = DeckService.getInstance(MainWrapper.SERVICE);
         loggedInUser = user;
         populateDeckList();
+        cardListPane.setVisible(false);
+        cardPane.setVisible(false);
     }
 
 
@@ -48,7 +78,7 @@ public class ManageFlashController {
         HashMap<String, String> deckIdMap = new HashMap<>();
 
         for (String s: deckMap.keySet()) {
-            deckIdMap.put(deckMap.get(s).getName(), deckMap.get(s).getDeckID());
+            deckIdMap.put(deckMap.get(s).getName(), s);
         }
 
         for (String deckID: decks) {
@@ -58,15 +88,29 @@ public class ManageFlashController {
         deckList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                currentDeck = deckMap.get(deckIdMap.get(deckList.getSelectionModel().getSelectedItem()));
+                if (deckList.getSelectionModel().getSelectedItem() == null) {
+                    currentDeckLabel.setVisible(false);
+                    cardListPane.setVisible(false);
+                    cardPane.setVisible(false);
+                } else {
+                    currentDeck = deckMap.get(deckIdMap.get(deckList.getSelectionModel().getSelectedItem()));
+                    currentDeckLabel.setText("Current Deck: " + currentDeck.getName());
+                    cardListPane.setVisible(true);
+                    cardList.setVisible(true);
+
+                }
             }
         });
 
     }
 
-    private void populateCards() {
+    private void populateCards(FlashCardDeck deck) {
+
+
 
     }
+
+
 
 
 }

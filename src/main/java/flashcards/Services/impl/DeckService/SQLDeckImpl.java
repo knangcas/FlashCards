@@ -36,10 +36,12 @@ public class SQLDeckImpl implements DeckService {
         PreparedStatement ps1 = null;
         PreparedStatement ps2 = null;
         ResultSet resultSet = null;
+        ResultSet resultSet2 = null;
         //String query = "SELECT * FROM CARDS WHERE deckID = ?";
         String query = "SELECT CARDS.question, CARDS.answer, DECKS.deckID, DECKS.deckName, CARDS.cardID " +
                 "FROM DECKS INNER JOIN CARDS ON DECKS.deckID = CARDS.deckID" +
                 " WHERE DECKS.deckID = ?";
+        String query2 = "SELECT decks.deckName FROM DECKS WHERE decks.deckID = ?";
         try {
             ps1 = conn.prepareStatement(query);
             ps1.setString(1, deckID);
@@ -60,6 +62,15 @@ public class SQLDeckImpl implements DeckService {
                 firstPass = true;
             }
 
+            if (rval.getName().equals("")) {
+                ps2 = conn.prepareStatement(query2);
+                ps2.setString(1, deckID);
+                resultSet2 = ps2.executeQuery();
+                while (resultSet2.next()) {
+                    rval.setName(resultSet2.getString(1));
+                }
+            }
+
 
 
         } catch (SQLException e) {
@@ -71,11 +82,19 @@ public class SQLDeckImpl implements DeckService {
             if (conn != null) {
                 conn.close();
             }
+            if (resultSet != null) {
+                resultSet.close();
+            }
+            if (resultSet2 != null) {
+                resultSet2.close();
+            }
         }
 
 
         return rval;
     }
+
+
 
     @Override
     public List<String> getDecks(User user) {
