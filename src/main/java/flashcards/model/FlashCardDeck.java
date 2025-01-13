@@ -1,11 +1,10 @@
 package flashcards.model;
 
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Random;
-import java.util.Stack;
+import java.util.*;
 
 public class FlashCardDeck{
+
+
 
     private Stack<FlashCard> deck;
 
@@ -37,6 +36,7 @@ public class FlashCardDeck{
 
     public void addFlashCard(FlashCard card) {
         deck.push(card);
+
     }
 
     public FlashCardDeck(String name) {
