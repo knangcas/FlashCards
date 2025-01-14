@@ -32,12 +32,13 @@
             <ListView fx:id="cardList" layoutX="13.0" layoutY="29.0" prefHeight="427.0" prefWidth="280.0" />
          </children>
       </Pane>
-      <Pane fx:id="cardPane" layoutX="650.0" layoutY="131.0" prefHeight="484.0" prefWidth="399.0">
+      <Pane fx:id="cardPane" layoutX="650.0" layoutY="131.0" prefHeight="505.0" prefWidth="399.0">
          <children>
             <Label fx:id="answerLabel" layoutX="14.0" layoutY="251.0" text="Answer" />
             <Label fx:id="questionLabel" layoutX="14.0" layoutY="28.0" text="Question" />
             <TextArea fx:id="answerTextArea" layoutX="14.0" layoutY="52.0" prefHeight="182.0" prefWidth="362.0" />
             <TextArea fx:id="questionTextArea" layoutX="14.0" layoutY="276.0" prefHeight="182.0" prefWidth="362.0" />
+            <Button fx:id="saveCardButton" layoutX="300.0" layoutY="15.0" mnemonicParsing="false" onAction="#saveCard" prefHeight="25.0" prefWidth="76.0" text="Save Card" />
          </children>
       </Pane>
    </children>

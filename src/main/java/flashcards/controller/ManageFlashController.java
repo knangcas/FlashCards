@@ -7,6 +7,7 @@ import flashcards.model.FlashCardDeck;
 import flashcards.model.User;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -159,8 +160,7 @@ public class ManageFlashController {
     }
 
 
-
-
-
-
+    public void saveCard(ActionEvent actionEvent) {
+        //TODO
+    }
 }
