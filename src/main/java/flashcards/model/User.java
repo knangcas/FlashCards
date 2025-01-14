@@ -14,7 +14,7 @@ public class User {
         return username;
     }
 
-    public HashMap<String, FlashCardDeck> decks;
+    public HashMap<Integer, FlashCardDeck> decks;
 
     public User(String username, String password) {
         this.username = username;
@@ -22,11 +22,11 @@ public class User {
         decks = new HashMap<>();
     }
 
-    public HashMap<String, FlashCardDeck> getDecks() {
+    public HashMap<Integer, FlashCardDeck> getDecks() {
         return decks;
     }
 
-    public void addDeck(String deckID, FlashCardDeck deck) {
+    public void addDeck(int deckID, FlashCardDeck deck) {
         decks.put(deckID, deck);
     }
 

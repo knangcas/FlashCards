@@ -23,15 +23,15 @@ public class FlashCardDeck{
 
     private int totalCards;
 
-    private String deckID;
+    private int deckID;
 
     private String name;
 
-    public String getDeckID() {
+    public int getDeckID() {
         return deckID;
     }
 
-    public void setDeckID(String deckID) {
+    public void setDeckID(int deckID) {
         this.deckID = deckID;
     }
 
@@ -49,13 +49,13 @@ public class FlashCardDeck{
         return cards;
     }
 
-    public void removeCard(String cardID) {
+    public void removeCard(int cardID) {
         if (deck.size() != totalCards) {
             resetDeck();
         }
 
         for (int i = 0; i < cards.size(); i++) {
-            if (cards.get(i).getCardID().equals(cardID)) {
+            if (cards.get(i).getCardID() == cardID) {
                 cards.remove(i);
                 i = cards.size();
             }
@@ -63,7 +63,7 @@ public class FlashCardDeck{
 
         for (int i = 0; i < totalCards; i++) {
             shuffle1.push(deck.pop());
-            if (shuffle1.peek().getCardID().equals(cardID)) {
+            if (shuffle1.peek().getCardID()==cardID) {
                 shuffle1.pop();
                 i = totalCards;
             }
@@ -73,13 +73,13 @@ public class FlashCardDeck{
         totalCards--;
     }
 
-    public void updateCard(String cardID, String question, String answer) {
+    public void updateCard(int cardID, String question, String answer) {
         if (deck.size() != totalCards) {
             resetDeck();
         }
 
         for (int i = 0; i < cards.size(); i++) {
-            if (cards.get(i).getCardID().equals(cardID)) {
+            if (cards.get(i).getCardID() == cardID) {
                 cards.get(i).setQuestion(question);
                 cards.get(i).setAnswer(answer);
             }
@@ -90,7 +90,7 @@ public class FlashCardDeck{
 
             shuffle1.push(deck.pop());
 
-            if (shuffle1.peek().getCardID().equals(cardID)) {
+            if (shuffle1.peek().getCardID() == cardID) {
                 shuffle1.peek().setQuestion(question);
                 shuffle1.peek().setAnswer(answer);
                 i = totalCards;

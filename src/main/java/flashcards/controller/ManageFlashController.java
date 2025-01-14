@@ -5,6 +5,7 @@ import flashcards.Services.DeckService;
 import flashcards.model.FlashCard;
 import flashcards.model.FlashCardDeck;
 import flashcards.model.User;
+import flashcards.model.exception.FlashCardNullException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -14,6 +15,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -80,16 +82,16 @@ public class ManageFlashController {
 
 
     private void populateDeckList() {
-        List<String> decks = deckService.getDecks(loggedInUser);
+        List<Integer> decks = deckService.getDecks(loggedInUser);
         quantityDeckLabel.setText(decks.size() + " Decks");
-        HashMap<String, FlashCardDeck> deckMap = loggedInUser.getDecks();
-        HashMap<String, String> deckIdMap = new HashMap<>();
+        HashMap<Integer, FlashCardDeck> deckMap = loggedInUser.getDecks();
+        HashMap<String, Integer> deckIdMap = new HashMap<>();
 
-        for (String s: deckMap.keySet()) {
-            deckIdMap.put(deckMap.get(s).getName(), s);
+        for (int deckID: deckMap.keySet()) {
+            deckIdMap.put(deckMap.get(deckID).getName(), deckID);
         }
 
-        for (String deckID: decks) {
+        for (int deckID: decks) {
             deckList.getItems().add(deckMap.get(deckID).getName());
         }
 
@@ -161,6 +163,16 @@ public class ManageFlashController {
 
 
     public void saveCard(ActionEvent actionEvent) {
-        //TODO
+        currentCard.setQuestion(questionTextArea.getText());
+        currentCard.setAnswer(answerTextArea.getText());
+        try {
+            if (deckService.updateCard(currentCard)) {
+                System.out.println("Updated Card " + currentCard.getCardID());
+            }
+        } catch (SQLException e){
+            // TODO alert connection issues
+        } catch (FlashCardNullException e) {
+            // TODO do an alert saying card doesn't exist
+        }
     }
 }

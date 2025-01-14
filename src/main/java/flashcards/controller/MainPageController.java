@@ -43,9 +43,9 @@ public class MainPageController {
         DeckService deckService = DeckService.getInstance(MainWrapper.SERVICE);
         loggedInUser = user;
         welcomeText.setText("Welcome, " + loggedInUser.getUsername() + "!");
-        List<String> decks = deckService.getDecks(user);
+        List<Integer> decks = deckService.getDecks(user);
 
-        for (String deckID : decks) {
+        for (int deckID : decks) {
             user.addDeck(deckID, deckService.getDeck(deckID));
         }
 

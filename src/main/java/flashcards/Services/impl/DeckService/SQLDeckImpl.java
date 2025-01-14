@@ -5,6 +5,7 @@ import flashcards.Services.impl.SQLVariables;
 import flashcards.model.FlashCard;
 import flashcards.model.FlashCardDeck;
 import flashcards.model.User;
+import flashcards.model.exception.FlashCardNullException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class SQLDeckImpl implements DeckService {
 
 
     @Override
-    public FlashCardDeck getDeck(String deckID) throws SQLException {
+    public FlashCardDeck getDeck(int deckID) throws SQLException {
 
         connect();
         FlashCardDeck rval = null;
@@ -44,7 +45,7 @@ public class SQLDeckImpl implements DeckService {
         String query2 = "SELECT decks.deckName FROM DECKS WHERE decks.deckID = ?";
         try {
             ps1 = conn.prepareStatement(query);
-            ps1.setString(1, deckID);
+            ps1.setInt(1, deckID);
             resultSet = ps1.executeQuery();
             rval = new FlashCardDeck("");
             //question, answer, deckID (FK), deckName, CARDS.cardID
@@ -57,14 +58,14 @@ public class SQLDeckImpl implements DeckService {
                 FlashCard flashCard;
                 flashCard = new FlashCard(resultSet.getString(1), resultSet.getString(2));
                 flashCard.setDeckID(deckID);
-                flashCard.setCardID(resultSet.getString(5));
+                flashCard.setCardID(resultSet.getInt(5));
                 rval.addFlashCard(flashCard);
                 firstPass = true;
             }
 
             if (rval.getName().equals("")) {
                 ps2 = conn.prepareStatement(query2);
-                ps2.setString(1, deckID);
+                ps2.setInt(1, deckID);
                 resultSet2 = ps2.executeQuery();
                 while (resultSet2.next()) {
                     rval.setName(resultSet2.getString(1));
@@ -97,9 +98,9 @@ public class SQLDeckImpl implements DeckService {
 
 
     @Override
-    public List<String> getDecks(User user) {
+    public List<Integer> getDecks(User user) {
         connect();
-        List<String> rval = new ArrayList<>();
+        List<Integer> rval = new ArrayList<>();
 
 
         ResultSet resultSet = null;
@@ -112,7 +113,7 @@ public class SQLDeckImpl implements DeckService {
             preparedStatement.setString(1, user.getUsername());
             resultSet = preparedStatement.executeQuery();
             while(resultSet.next()) {
-                rval.add((resultSet.getString(1)));
+                rval.add((resultSet.getInt(1)));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -133,7 +134,89 @@ public class SQLDeckImpl implements DeckService {
     }
 
     @Override
-    public boolean updateDeck(FlashCardDeck deck, FlashCard card) {
+    public boolean updateDeck(FlashCardDeck deck) {
+        connect();
+
+        //grab deckID, get list of cards
+        //
+        return false;
+    }
+
+    @Override
+    public boolean updateCard(FlashCard card) throws SQLException {
+        int cardID = card.getCardID();
+        int deckID = card.getDeckID();
+
+
+        String query = "Update cards Set cards.question = ?, cards.answer = ? Where cards.cardID = ?";
+        PreparedStatement preparedStatement = null;
+        //note, this can also be done with the updateXXX methods with a SELECT statement too.
+        //quesiton, answer, deckID, cardID
+        try {
+            preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setString(1, card.getQuestion());
+            preparedStatement.setString(2, card.getAnswer());
+            preparedStatement.setInt(3, cardID);
+
+
+            int result = preparedStatement.executeUpdate();
+            if (result == 0) {
+                throw new FlashCardNullException();
+            }
+            if (result > 0) {
+                return true;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+
+
+        }
+        return false;
+    }
+
+    private void updateCardHelper() {
+
+    }
+
+    @Override
+    public boolean addCard(FlashCard card) {
+        connect();
+        String query = "Insert into cards (question,answer,deckID) values(?,?,?)";
+        int result;
+        PreparedStatement preparedStatement = null;
+
+        try {
+            preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setString(1, card.getQuestion());
+            preparedStatement.setString(2, card.getAnswer());
+            preparedStatement.setInt(3, card.getDeckID());
+            result = preparedStatement.executeUpdate();
+
+            if (result == 0) {
+                System.out.println("insert failed");
+            }
+            if (result > 0) {
+                System.out.println("insert success");
+                return true;
+            }
+
+        } catch (SQLException e) {
+            //TODO
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteCard(String cardID) {
         return false;
     }
 }

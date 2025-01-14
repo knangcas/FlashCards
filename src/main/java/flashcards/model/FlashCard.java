@@ -5,23 +5,23 @@ public class FlashCard {
     private String question;
     private String answer;
 
-    private String deckID;
+    private int deckID;
 
-    private String cardID;
+    private int cardID;
 
-    public String getDeckID() {
+    public int getDeckID() {
         return deckID;
     }
 
-    public void setDeckID(String deckID) {
+    public void setDeckID(int deckID) {
         this.deckID = deckID;
     }
 
-    public String getCardID() {
+    public int getCardID() {
         return cardID;
     }
 
-    public void setCardID(String cardID) {
+    public void setCardID(int cardID) {
         this.cardID = cardID;
     }
 

@@ -17,15 +17,21 @@ public interface DeckService {
         return null;
     }
 
-    public FlashCardDeck getDeck(String deckID) throws SQLException;
+    public FlashCardDeck getDeck(int deckID) throws SQLException;
 
-    public List<String> getDecks(User user);
+    public List<Integer> getDecks(User user);
 
     public boolean createDeck(FlashCardDeck deck);
 
     public boolean deleteDeck(FlashCardDeck deck);
 
-    public boolean updateDeck(FlashCardDeck deck, FlashCard card);
+    public boolean updateDeck(FlashCardDeck deck);
+
+    public boolean updateCard(FlashCard card) throws SQLException;
+
+    public boolean addCard(FlashCard card);
+
+    public boolean deleteCard(String cardID);
 
 
 

@@ -49,7 +49,7 @@ public class FlashCardWindowController {
         deckService = DeckService.getInstance(MainWrapper.SERVICE);
 
         // temporary
-        deck = deckService.getDeck("deck1");
+        deck = deckService.getDeck(1);
 
         //FlashCard card1 = new FlashCard("What is a pointer?", "A pointer is a reference to an address in memory.");
         //FlashCard card2 = new FlashCard("Does python need semicolons?", "No");
