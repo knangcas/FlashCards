@@ -5,6 +5,7 @@ import java.util.*;
 public class FlashCardDeck{
 
 
+    private List<FlashCard> cards;
 
     private Stack<FlashCard> deck;
 
@@ -36,6 +37,66 @@ public class FlashCardDeck{
 
     public void addFlashCard(FlashCard card) {
         deck.push(card);
+        FlashCard cardCopy = new FlashCard(card.getQuestion(), card.getAnswer());
+        cardCopy.setCardID(card.getCardID());
+        cardCopy.setDeckID(card.getDeckID());
+
+        cards.add(cardCopy);
+
+    }
+
+    public List<FlashCard> getCardList() {
+        return cards;
+    }
+
+    public void removeCard(String cardID) {
+        if (deck.size() != totalCards) {
+            resetDeck();
+        }
+
+        for (int i = 0; i < cards.size(); i++) {
+            if (cards.get(i).getCardID().equals(cardID)) {
+                cards.remove(i);
+                i = cards.size();
+            }
+        }
+
+        for (int i = 0; i < totalCards; i++) {
+            shuffle1.push(deck.pop());
+            if (shuffle1.peek().getCardID().equals(cardID)) {
+                shuffle1.pop();
+                i = totalCards;
+            }
+        }
+
+        resetDeck();
+        totalCards--;
+    }
+
+    public void updateCard(String cardID, String question, String answer) {
+        if (deck.size() != totalCards) {
+            resetDeck();
+        }
+
+        for (int i = 0; i < cards.size(); i++) {
+            if (cards.get(i).getCardID().equals(cardID)) {
+                cards.get(i).setQuestion(question);
+                cards.get(i).setAnswer(answer);
+            }
+        }
+
+
+        for (int i = 0; i < totalCards; i++) {
+
+            shuffle1.push(deck.pop());
+
+            if (shuffle1.peek().getCardID().equals(cardID)) {
+                shuffle1.peek().setQuestion(question);
+                shuffle1.peek().setAnswer(answer);
+                i = totalCards;
+            }
+        }
+        resetDeck();
 
     }
 
@@ -53,6 +114,8 @@ public class FlashCardDeck{
         incorrect = new Stack<>();
 
         skipped = new LinkedList<>();
+
+        cards = new ArrayList<>();
     }
 
     public FlashCard getCard() {
@@ -93,8 +156,6 @@ public class FlashCardDeck{
     public void shuffle() {
         resetDeck();
         Random rand = new Random();
-
-
         while (deck.size() > 0) {
             int n1 = rand.nextInt(100);
             int n2 = rand.nextInt(100);
@@ -109,8 +170,6 @@ public class FlashCardDeck{
         }
         resetDeck();
     }
-
-
 
     private void resetDeck() {
         if (shuffle1.size() > 0) {

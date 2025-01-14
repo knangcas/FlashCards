@@ -24,6 +24,8 @@ public class ManageFlashController {
 
     private FlashCardDeck currentDeck;
 
+    private FlashCard currentCard;
+
     @FXML
     private ListView deckList;
 
@@ -66,9 +68,14 @@ public class ManageFlashController {
         deckService = DeckService.getInstance(MainWrapper.SERVICE);
         loggedInUser = user;
         populateDeckList();
+
+
+
         cardListPane.setVisible(false);
         cardPane.setVisible(false);
     }
+
+
 
 
     private void populateDeckList() {
@@ -93,6 +100,7 @@ public class ManageFlashController {
                     cardListPane.setVisible(false);
                     cardPane.setVisible(false);
                 } else {
+                    currentDeck = null;
                     currentDeck = deckMap.get(deckIdMap.get(deckList.getSelectionModel().getSelectedItem()));
                     currentDeckLabel.setText("Current Deck: " + currentDeck.getName());
                     cardListPane.setVisible(true);
@@ -102,6 +110,8 @@ public class ManageFlashController {
                 }
             }
         });
+
+
 
     }
 
@@ -113,8 +123,42 @@ public class ManageFlashController {
         //within deck that has a copy of all of the cards
         //within the internal stacks of the data structure
 
+        cardList.getItems().clear();
+        System.out.println(cardList.getItems().size());
+
+        List<FlashCard> cards = currentDeck.getCardList();
+        quantityCardLabel.setText(cards.size() + " Cards");
+
+        for (int i = 0; i < cards.size(); i++) {
+            cardList.getItems().add(cards.get(i).getQuestion());
+        }
+
+        cardList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                if (cardList.getSelectionModel().getSelectedItem() == null) {
+                    cardPane.setVisible(false);
+                } else {
+                    cardPane.setVisible(true);
+
+
+                    if (cards.get(cardList.getSelectionModel().getSelectedIndex()).getQuestion().equals(cardList.getSelectionModel().getSelectedItem())) {
+                        currentCard = cards.get(cardList.getSelectionModel().getSelectedIndex());
+                        populateQandA();
+                    }
+                }
+            }
+        });
+
 
     }
+
+    private void populateQandA() {
+        questionTextArea.setText(currentCard.getQuestion());
+        answerTextArea.setText(currentCard.getAnswer());
+    }
+
+
 
 
 
