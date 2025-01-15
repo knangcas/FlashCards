@@ -17,18 +17,16 @@
                <font>
                   <Font size="48.0" />
                </font></Label>
-            <Label fx:id="currentDeckLabel" layoutX="14.0" layoutY="60.0" prefHeight="27.0" prefWidth="123.0" text="Deck Name:">
+            <Label fx:id="currentDeckLabel" layoutX="14.0" layoutY="60.0" prefHeight="27.0" prefWidth="493.0" text="Deck Name">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="currentDeckLabel1" layoutX="14.0" layoutY="82.0" prefHeight="27.0" prefWidth="123.0" text="Deck Subject:">
+            <Label fx:id="currentDeckSubjectLabel" layoutX="14.0" layoutY="82.0" prefHeight="27.0" prefWidth="493.0" text="Deck Subject">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="deckNameField" layoutX="128.0" layoutY="61.0" prefHeight="25.0" prefWidth="362.0" styleClass="borderlessField" stylesheets="@styles/styles.css" />
-            <TextField fx:id="deckSubjectField" layoutX="128.0" layoutY="83.0" prefHeight="25.0" prefWidth="362.0" styleClass="borderlessField" stylesheets="@styles/styles.css" />
          </children>
       </Pane>
       <ListView fx:id="deckList" layoutX="52.0" layoutY="159.0" prefHeight="427.0" prefWidth="280.0" />
@@ -53,5 +51,28 @@
       </Pane>
       <Button fx:id="addDeckButton" layoutX="87.0" layoutY="592.0" mnemonicParsing="false" onAction="#addDeck" prefHeight="25.0" prefWidth="76.0" text="Add Deck" />
       <Button fx:id="editDeckButton" layoutX="171.0" layoutY="592.0" mnemonicParsing="false" onAction="#editDeck" prefHeight="25.0" prefWidth="76.0" text="Edit Deck" />
+      <Pane fx:id="deckDetailsPane" layoutX="345.0" layoutY="131.0" prefHeight="511.0" prefWidth="700.0">
+         <children>
+            <Label fx:id="currentDeckLabel2" layoutX="56.0" layoutY="213.0" prefHeight="27.0" prefWidth="123.0" text="Deck Name">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="currentDeckLabel11" layoutX="56.0" layoutY="242.0" prefHeight="27.0" prefWidth="123.0" text="Deck Subject">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="deckMainLabel" layoutX="56.0" layoutY="105.0" prefHeight="65.0" prefWidth="382.0" text="NEW DECK">
+               <font>
+                  <Font size="48.0" />
+               </font>
+            </Label>
+            <TextField fx:id="deckNameField" layoutX="179.0" layoutY="214.0" prefHeight="25.0" prefWidth="224.0" styleClass="borderlessField" />
+            <TextField fx:id="deckSubjectField" layoutX="179.0" layoutY="243.0" prefHeight="25.0" prefWidth="224.0" styleClass="borderlessField" />
+            <Button layoutX="322.0" layoutY="291.0" mnemonicParsing="false" onAction="#saveDeck" prefHeight="25.0" prefWidth="76.0" text="Save" />
+            <Button layoutX="232.0" layoutY="291.0" mnemonicParsing="false" onAction="#cancelDeck" prefHeight="25.0" prefWidth="76.0" text="Cancel" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

@@ -125,14 +125,44 @@ public class SQLDeckImpl implements DeckService {
     }
 
     @Override
-    public boolean createDeck(FlashCardDeck deck) {
+    public boolean createDeck(FlashCardDeck deck, String username) throws SQLException {
+        connect();
+        String query = "Insert into decks (deckName, username) values (?,?)";
+        PreparedStatement preparedStatement = null;
+        int result;
+        try {
+            preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setString(1, deck.getName());
+            preparedStatement.setString(2, username);
+            result = preparedStatement.executeUpdate();
+
+            if (result == 0) {
+                //name has to be unique
+                return false;
+            }
+
+            if (result > 0) {
+                return true;
+            }
+        } catch (SQLException e) {
+            //name has to be unique
+        }   finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
         return false;
     }
+
 
     @Override
     public boolean deleteDeck(FlashCardDeck deck) {
         return false;
     }
+
 
     @Override
     public boolean updateDeck(FlashCardDeck deck) throws SQLException {

@@ -21,7 +21,7 @@ public interface DeckService {
 
     public List<Integer> getDecks(User user);
 
-    public boolean createDeck(FlashCardDeck deck);
+    public boolean createDeck(FlashCardDeck deck, String username) throws SQLException;
 
     public boolean deleteDeck(FlashCardDeck deck);
 

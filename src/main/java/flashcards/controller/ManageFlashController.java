@@ -10,9 +10,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 
 import java.sql.SQLException;
@@ -62,6 +60,25 @@ public class ManageFlashController {
     @FXML
     private Pane cardListPane;
 
+    @FXML
+    private Pane deckDetailsPane;
+
+    @FXML
+    private TextField deckNameField;
+
+    @FXML
+    private TextField deckSubjectField;
+
+    @FXML
+    private Label deckMainLabel;
+
+    @FXML
+    private Label currentDeckSubjectLabel;
+
+    @FXML
+    private Button editDeckButton;
+
+
 
 
 
@@ -71,9 +88,11 @@ public class ManageFlashController {
         deckService = DeckService.getInstance(MainWrapper.SERVICE);
         loggedInUser = user;
         populateDeckList();
+        editDeckButton.setDisable(true);
+        currentDeckLabel.setText("");
+        currentDeckSubjectLabel.setText("");
 
-
-
+        deckDetailsPane.setVisible(false);
         cardListPane.setVisible(false);
         cardPane.setVisible(false);
     }
@@ -82,6 +101,7 @@ public class ManageFlashController {
 
 
     private void populateDeckList() {
+        deckList.getItems().clear();
         List<Integer> decks = deckService.getDecks(loggedInUser);
         quantityDeckLabel.setText(decks.size() + " Decks");
         HashMap<Integer, FlashCardDeck> deckMap = loggedInUser.getDecks();
@@ -102,10 +122,18 @@ public class ManageFlashController {
                     currentDeckLabel.setVisible(false);
                     cardListPane.setVisible(false);
                     cardPane.setVisible(false);
+                    deckDetailsPane.setVisible(false);
+                    currentDeckLabel.setText("");
+                    currentDeckSubjectLabel.setText("");
                 } else {
                     currentDeck = null;
                     currentDeck = deckMap.get(deckIdMap.get(deckList.getSelectionModel().getSelectedItem()));
-                    currentDeckLabel.setText("Current Deck: " + currentDeck.getName());
+                    editDeckButton.setDisable(false);
+                    deckDetailsPane.setVisible(false);
+                    currentDeckLabel.setText("Selected Deck: " + currentDeck.getName());
+                    if (currentDeck.getSubject() != null) {
+                        currentDeckSubjectLabel.setText("Subject: " + currentDeck.getSubject());
+                    }
                     cardListPane.setVisible(true);
                     cardList.setVisible(true);
                     populateCards();
@@ -190,12 +218,52 @@ public class ManageFlashController {
     }
 
     public void addDeck(ActionEvent actionEvent) {
-        //pop-up window prompting for deck name (required)
-        //and subject (optional)
-        //add to DB
+        showDeckPane();
+        deckList.getSelectionModel().clearSelection();
+        currentDeck = null;
+
+
     }
 
     public void editDeck(ActionEvent actionEvent) {
+        showDeckPane();
 
     }
+
+    private void showDeckPane() {
+        deckDetailsPane.setVisible(true);
+        cardPane.setVisible(false);
+        cardListPane.setVisible(false);
+    }
+
+
+    public void saveDeck(ActionEvent actionEvent) throws SQLException {
+        if (currentDeck != null) {
+            deckMainLabel.setText("Edit Deck");
+            if (!deckNameField.getText().isEmpty()) {
+                currentDeck.setName(deckNameField.getText());
+                currentDeck.setSubject(deckSubjectField.getText());
+            }
+            deckService.updateDeck(currentDeck);
+        } else {
+            deckMainLabel.setText("New Deck");
+            FlashCardDeck newDeck = new FlashCardDeck(deckNameField.getText());
+            if (!deckSubjectField.getText().isEmpty()) {
+                newDeck.setSubject(deckSubjectField.getText());
+            }
+            deckService.createDeck(newDeck, loggedInUser.getUsername());
+
+        }
+    }
+
+    public void cancelDeck(ActionEvent actionEvent) {
+        deckDetailsPane.setVisible(false);
+        if (currentDeck != null) {
+            cardListPane.setVisible(true);
+            if (currentCard != null) {
+                cardPane.setVisible(true);
+            }
+        }
+    }
+
 }
