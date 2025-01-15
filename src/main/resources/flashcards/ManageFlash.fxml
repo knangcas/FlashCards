@@ -25,11 +25,13 @@
       </Pane>
       <ListView fx:id="deckList" layoutX="52.0" layoutY="159.0" prefHeight="427.0" prefWidth="280.0" />
       <Label fx:id="quantityDeckLabel" layoutX="290.0" layoutY="136.0" text="X Decks" />
-      <Button layoutX="256.0" layoutY="592.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="76.0" text="Remove" />
-      <Pane fx:id="cardListPane" layoutX="344.0" layoutY="131.0" prefHeight="484.0" prefWidth="306.0">
+      <Button layoutX="256.0" layoutY="592.0" mnemonicParsing="false" onAction="#removeDeck" prefHeight="25.0" prefWidth="76.0" text="Remove" />
+      <Pane fx:id="cardListPane" layoutX="344.0" layoutY="131.0" prefHeight="511.0" prefWidth="306.0">
          <children>
             <Label fx:id="quantityCardLabel" layoutX="251.0" layoutY="6.0" text="X Cards" />
             <ListView fx:id="cardList" layoutX="13.0" layoutY="29.0" prefHeight="427.0" prefWidth="280.0" />
+            <Button layoutX="213.0" layoutY="462.0" mnemonicParsing="false" onAction="#removeCard" prefHeight="25.0" prefWidth="76.0" text="Remove" />
+            <Button layoutX="127.0" layoutY="462.0" mnemonicParsing="false" onAction="#addCard" prefHeight="25.0" prefWidth="76.0" text="Add Card" />
          </children>
       </Pane>
       <Pane fx:id="cardPane" layoutX="650.0" layoutY="131.0" prefHeight="505.0" prefWidth="399.0">
@@ -41,5 +43,6 @@
             <Button fx:id="saveCardButton" layoutX="300.0" layoutY="15.0" mnemonicParsing="false" onAction="#saveCard" prefHeight="25.0" prefWidth="76.0" text="Save Card" />
          </children>
       </Pane>
+      <Button fx:id="addDeckButton" layoutX="170.0" layoutY="592.0" mnemonicParsing="false" onAction="#addDeck" prefHeight="25.0" prefWidth="76.0" text="Add Deck" />
    </children>
 </AnchorPane>

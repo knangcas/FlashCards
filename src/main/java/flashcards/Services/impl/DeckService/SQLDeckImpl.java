@@ -39,7 +39,7 @@ public class SQLDeckImpl implements DeckService {
         ResultSet resultSet = null;
         ResultSet resultSet2 = null;
         //String query = "SELECT * FROM CARDS WHERE deckID = ?";
-        String query = "SELECT CARDS.question, CARDS.answer, DECKS.deckID, DECKS.deckName, CARDS.cardID " +
+        String query = "SELECT CARDS.question, CARDS.answer, DECKS.deckID, DECKS.deckName, CARDS.cardID, decks.subject " +
                 "FROM DECKS INNER JOIN CARDS ON DECKS.deckID = CARDS.deckID" +
                 " WHERE DECKS.deckID = ?";
         String query2 = "SELECT decks.deckName FROM DECKS WHERE decks.deckID = ?";
@@ -54,6 +54,7 @@ public class SQLDeckImpl implements DeckService {
 
                 if (!firstPass) {
                     rval.setName(resultSet.getString(4));
+                    rval.setSubject(resultSet.getString(6));
                 } //small optimization
                 FlashCard flashCard;
                 flashCard = new FlashCard(resultSet.getString(1), resultSet.getString(2));

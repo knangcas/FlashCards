@@ -175,4 +175,23 @@ public class ManageFlashController {
             // TODO do an alert saying card doesn't exist
         }
     }
+
+    public void addCard(ActionEvent actionEvent) {
+        //addCard to currentDeck
+    }
+
+    public void removeCard(ActionEvent actionEvent) {
+        //just remove card
+    }
+
+    public void removeDeck(ActionEvent actionEvent) {
+        //cascade delete enabled in DB
+        //if not, delete manually
+    }
+
+    public void addDeck(ActionEvent actionEvent) {
+        //pop-up window prompting for deck name (required)
+        //and subject (optional)
+        //add to DB
+    }
 }
