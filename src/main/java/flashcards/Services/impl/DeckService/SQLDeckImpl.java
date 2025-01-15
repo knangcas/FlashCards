@@ -278,7 +278,7 @@ public class SQLDeckImpl implements DeckService {
             }
 
         } catch (SQLException e) {
-            //TODO
+            e.printStackTrace();
         } finally {
             if (preparedStatement != null) {
                 preparedStatement.close();

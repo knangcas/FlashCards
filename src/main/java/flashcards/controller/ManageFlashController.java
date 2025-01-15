@@ -11,6 +11,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 
 import java.sql.SQLException;
@@ -78,6 +79,9 @@ public class ManageFlashController {
     @FXML
     private Button editDeckButton;
 
+    @FXML
+    private Button saveCardButton;
+
 
 
 
@@ -95,6 +99,7 @@ public class ManageFlashController {
         deckDetailsPane.setVisible(false);
         cardListPane.setVisible(false);
         cardPane.setVisible(false);
+        saveCardButton.setDisable(true);
     }
 
 
@@ -136,6 +141,7 @@ public class ManageFlashController {
                     }
                     cardListPane.setVisible(true);
                     cardList.setVisible(true);
+                    System.out.println("Deck Selected Detaiils : " + currentDeck.getName() + " id: " + currentDeck.getDeckID());
                     populateCards();
 
                 }
@@ -191,20 +197,43 @@ public class ManageFlashController {
 
 
     public void saveCard(ActionEvent actionEvent) {
-        currentCard.setQuestion(questionTextArea.getText());
-        currentCard.setAnswer(answerTextArea.getText());
-        try {
-            if (deckService.updateCard(currentCard)) {
-                System.out.println("Updated Card " + currentCard.getCardID());
+        System.out.println("saved button clicked");
+        if (currentCard != null) {
+            currentCard.setQuestion(questionTextArea.getText());
+            currentCard.setAnswer(answerTextArea.getText());
+            try {
+                if (deckService.updateCard(currentCard)) {
+                    System.out.println("Updated Card " + currentCard.getCardID());
+                }
+            } catch (SQLException e) {
+                // TODO alert connection issues
+            } catch (FlashCardNullException e) {
+                // TODO do an alert saying card doesn't exist
             }
-        } catch (SQLException e){
-            // TODO alert connection issues
-        } catch (FlashCardNullException e) {
-            // TODO do an alert saying card doesn't exist
+        } else {
+            if (!questionTextArea.getText().isEmpty() && !answerTextArea.getText().isEmpty()) {
+                FlashCard newCard = new FlashCard(questionTextArea.getText(), answerTextArea.getText());
+                newCard.setDeckID(currentDeck.getDeckID());
+                System.out.println("deckID is " + newCard.getDeckID());
+                try {
+                    deckService.addCard(newCard);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println("todo alert");
+            }
         }
     }
 
     public void addCard(ActionEvent actionEvent) {
+        currentCard = null;
+        cardList.getSelectionModel().clearSelection();
+        cardPane.setVisible(true);
+        questionTextArea.clear();
+        answerTextArea.clear();
+        saveCardButton.setDisable(true);
+
         //addCard to currentDeck
     }
 
@@ -266,4 +295,11 @@ public class ManageFlashController {
         }
     }
 
+    public void checkFields(KeyEvent keyEvent) {
+        if (!questionTextArea.getText().isEmpty() && !answerTextArea.getText().isEmpty()) {
+            saveCardButton.setDisable(false);
+        } else {
+            saveCardButton.setDisable(true);
+        }
+    }
 }
