@@ -54,6 +54,7 @@ public class SQLDeckImpl implements DeckService {
 
                 if (!firstPass) {
                     rval.setName(resultSet.getString(4));
+                    rval.setDeckID(resultSet.getInt(3));
                     rval.setSubject(resultSet.getString(6));
                 } //small optimization
                 FlashCard flashCard;
@@ -135,14 +136,14 @@ public class SQLDeckImpl implements DeckService {
             preparedStatement.setString(1, deck.getName());
             preparedStatement.setString(2, username);
             result = preparedStatement.executeUpdate();
-
+            conn.commit();
             if (result == 0) {
                 //name has to be unique
-                return false;
+                //return false;
             }
 
             if (result > 0) {
-                return true;
+                //return true;
             }
         } catch (SQLException e) {
             //name has to be unique
@@ -186,13 +187,13 @@ public class SQLDeckImpl implements DeckService {
             preparedStatement.setString(2, deckSubject);
             preparedStatement.setInt(3, deckID);
             result = preparedStatement.executeUpdate();
-
+            conn.commit();
             if (result > 0) {
-                return true;
+                //return true;
             }
 
             if (result == 0) {
-                return false;
+                //return false;
             }
         } catch (SQLException e) {
             System.out.println("sqlerror");
@@ -228,6 +229,7 @@ public class SQLDeckImpl implements DeckService {
 
 
             int result = preparedStatement.executeUpdate();
+            conn.commit();
             if (result == 0) {
                 throw new FlashCardNullException();
             }
@@ -274,6 +276,7 @@ public class SQLDeckImpl implements DeckService {
             }
             if (result > 0) {
                 System.out.println("insert success");
+                conn.commit();
                 return true;
             }
 

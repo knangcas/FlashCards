@@ -82,15 +82,18 @@ public class ManageFlashController {
     @FXML
     private Button saveCardButton;
 
+    private List<FlashCard> cards;
 
 
 
 
 
 
-    public void initialize(User user) {
+
+    public void initialize(User user) throws SQLException {
         deckService = DeckService.getInstance(MainWrapper.SERVICE);
         loggedInUser = user;
+        userPopulateDeck();
         populateDeckList();
         editDeckButton.setDisable(true);
         currentDeckLabel.setText("");
@@ -102,13 +105,25 @@ public class ManageFlashController {
         saveCardButton.setDisable(true);
     }
 
+    private void userPopulateDeck() throws SQLException {
+        List<Integer> decks = deckService.getDecks(loggedInUser);
+
+        for (int i : decks) {
+            if (!loggedInUser.getDecks().containsKey(i)) {
+                loggedInUser.addDeck(i, deckService.getDeck(i));
+                System.out.println(i);
+            }
+        }
+    }
 
 
 
-    private void populateDeckList() {
+
+    private void populateDeckList() throws SQLException {
         deckList.getItems().clear();
         List<Integer> decks = deckService.getDecks(loggedInUser);
-        quantityDeckLabel.setText(decks.size() + " Decks");
+        quantityDeckLabel.setText(loggedInUser.getDeckQuantity() + " Decks");
+        userPopulateDeck();
         HashMap<Integer, FlashCardDeck> deckMap = loggedInUser.getDecks();
         HashMap<String, Integer> deckIdMap = new HashMap<>();
 
@@ -170,6 +185,8 @@ public class ManageFlashController {
             cardList.getItems().add(cards.get(i).getQuestion());
         }
 
+
+
         cardList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
@@ -180,6 +197,8 @@ public class ManageFlashController {
 
 
                     if (cards.get(cardList.getSelectionModel().getSelectedIndex()).getQuestion().equals(cardList.getSelectionModel().getSelectedItem())) {
+                        System.out.println("passed");
+                        System.out.println("cards.size = " + cards.size() + "selected index = " + cardList.getSelectionModel().getSelectedIndex());
                         currentCard = cards.get(cardList.getSelectionModel().getSelectedIndex());
                         populateQandA();
                     }
@@ -187,8 +206,9 @@ public class ManageFlashController {
             }
         });
 
-
     }
+
+
 
     private void populateQandA() {
         questionTextArea.setText(currentCard.getQuestion());
@@ -204,6 +224,7 @@ public class ManageFlashController {
             try {
                 if (deckService.updateCard(currentCard)) {
                     System.out.println("Updated Card " + currentCard.getCardID());
+                    populateCards();
                 }
             } catch (SQLException e) {
                 // TODO alert connection issues
@@ -217,6 +238,9 @@ public class ManageFlashController {
                 System.out.println("deckID is " + newCard.getDeckID());
                 try {
                     deckService.addCard(newCard);
+                    currentDeck = deckService.getDeck(newCard.getDeckID());
+                    populateCards();
+                    //currentDeck.addFlashCard(newCard);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -250,6 +274,7 @@ public class ManageFlashController {
         showDeckPane();
         deckList.getSelectionModel().clearSelection();
         currentDeck = null;
+        deckMainLabel.setText("New Deck");
 
 
     }
@@ -281,6 +306,8 @@ public class ManageFlashController {
                 newDeck.setSubject(deckSubjectField.getText());
             }
             deckService.createDeck(newDeck, loggedInUser.getUsername());
+            deckDetailsPane.setVisible(false);
+            populateDeckList();
 
         }
     }
