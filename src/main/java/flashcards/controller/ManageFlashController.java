@@ -194,4 +194,8 @@ public class ManageFlashController {
         //and subject (optional)
         //add to DB
     }
+
+    public void editDeck(ActionEvent actionEvent) {
+
+    }
 }

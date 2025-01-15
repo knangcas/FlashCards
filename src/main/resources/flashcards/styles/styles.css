@@ -25,6 +25,11 @@
 }
 
 
+.borderlessField {
+    -fx-border-style: none;
+    -fx-background-color: white;
+}
+
 .button {
     -fx-text-fill: black;
     -fx-background-color: #00d375;

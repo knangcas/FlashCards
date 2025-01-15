@@ -4,23 +4,31 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="649.0" prefWidth="1056.0" stylesheets="@styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="flashcards.controller.ManageFlashController">
+<AnchorPane prefHeight="649.0" prefWidth="1056.0" styleClass="mainPane" stylesheets="@styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="flashcards.controller.ManageFlashController">
    <children>
-      <Pane layoutX="24.0" layoutY="14.0" prefHeight="101.0" prefWidth="1015.0">
+      <Pane layoutX="24.0" layoutY="14.0" prefHeight="121.0" prefWidth="1015.0">
          <children>
-            <Label layoutX="14.0" layoutY="4.0" prefHeight="78.0" prefWidth="382.0" text="MANAGE DECK">
+            <Label layoutX="14.0" layoutY="-21.0" prefHeight="65.0" prefWidth="382.0" text="MANAGE DECK">
                <font>
                   <Font size="48.0" />
                </font></Label>
-            <Label fx:id="currentDeckLabel" layoutX="14.0" layoutY="60.0" prefHeight="27.0" prefWidth="929.0" text="Current Deck: ">
+            <Label fx:id="currentDeckLabel" layoutX="14.0" layoutY="60.0" prefHeight="27.0" prefWidth="123.0" text="Deck Name:">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
+            <Label fx:id="currentDeckLabel1" layoutX="14.0" layoutY="82.0" prefHeight="27.0" prefWidth="123.0" text="Deck Subject:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="deckNameField" layoutX="128.0" layoutY="61.0" prefHeight="25.0" prefWidth="362.0" styleClass="borderlessField" stylesheets="@styles/styles.css" />
+            <TextField fx:id="deckSubjectField" layoutX="128.0" layoutY="83.0" prefHeight="25.0" prefWidth="362.0" styleClass="borderlessField" stylesheets="@styles/styles.css" />
          </children>
       </Pane>
       <ListView fx:id="deckList" layoutX="52.0" layoutY="159.0" prefHeight="427.0" prefWidth="280.0" />
@@ -43,6 +51,7 @@
             <Button fx:id="saveCardButton" layoutX="300.0" layoutY="15.0" mnemonicParsing="false" onAction="#saveCard" prefHeight="25.0" prefWidth="76.0" text="Save Card" />
          </children>
       </Pane>
-      <Button fx:id="addDeckButton" layoutX="170.0" layoutY="592.0" mnemonicParsing="false" onAction="#addDeck" prefHeight="25.0" prefWidth="76.0" text="Add Deck" />
+      <Button fx:id="addDeckButton" layoutX="87.0" layoutY="592.0" mnemonicParsing="false" onAction="#addDeck" prefHeight="25.0" prefWidth="76.0" text="Add Deck" />
+      <Button fx:id="editDeckButton" layoutX="171.0" layoutY="592.0" mnemonicParsing="false" onAction="#editDeck" prefHeight="25.0" prefWidth="76.0" text="Edit Deck" />
    </children>
 </AnchorPane>

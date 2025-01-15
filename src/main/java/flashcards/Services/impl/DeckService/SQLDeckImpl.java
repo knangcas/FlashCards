@@ -135,8 +135,45 @@ public class SQLDeckImpl implements DeckService {
     }
 
     @Override
-    public boolean updateDeck(FlashCardDeck deck) {
+    public boolean updateDeck(FlashCardDeck deck) throws SQLException {
+        String deckName = deck.getName();
+        String deckSubject = deck.getSubject();
+        int deckID = deck.getDeckID();
+
+
         connect();
+        String query;
+        int result;
+
+        query = "UPDATE decks Set decks.deckName = ?, decks.subject = ? Where decks.deckID = ?";
+
+        //query = "update decks set decks.deckName = ? where decks.deckID = ?";
+        PreparedStatement preparedStatement = null;
+
+        try {
+            preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setString(1, deckName);
+            preparedStatement.setString(2, deckSubject);
+            preparedStatement.setInt(3, deckID);
+            result = preparedStatement.executeUpdate();
+
+            if (result > 0) {
+                return true;
+            }
+
+            if (result == 0) {
+                return false;
+            }
+        } catch (SQLException e) {
+            System.out.println("sqlerror");
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
 
         //grab deckID, get list of cards
         //
@@ -189,7 +226,7 @@ public class SQLDeckImpl implements DeckService {
     }
 
     @Override
-    public boolean addCard(FlashCard card) {
+    public boolean addCard(FlashCard card) throws SQLException {
         connect();
         String query = "Insert into cards (question,answer,deckID) values(?,?,?)";
         int result;
@@ -212,12 +249,45 @@ public class SQLDeckImpl implements DeckService {
 
         } catch (SQLException e) {
             //TODO
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+
         }
         return false;
     }
 
     @Override
-    public boolean deleteCard(String cardID) {
+    public boolean deleteCard(int cardID) throws SQLException {
+            connect();
+            int result;
+            PreparedStatement preparedStatement = null;
+            String query = "DELETE from CARDS where cardID = ?";
+            try {
+                preparedStatement = conn.prepareStatement(query);
+                preparedStatement.setInt(1, cardID);
+                result = preparedStatement.executeUpdate();
+                if (result == 0) {
+                    return false;
+                }
+                if (result > 0) {
+                    return true;
+                }
+            } catch (SQLException e) {
+
+            } finally {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            }
+
         return false;
     }
 }

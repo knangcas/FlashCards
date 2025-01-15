@@ -25,13 +25,13 @@ public interface DeckService {
 
     public boolean deleteDeck(FlashCardDeck deck);
 
-    public boolean updateDeck(FlashCardDeck deck);
+    public boolean updateDeck(FlashCardDeck deck) throws SQLException;
 
     public boolean updateCard(FlashCard card) throws SQLException;
 
-    public boolean addCard(FlashCard card);
+    public boolean addCard(FlashCard card) throws SQLException;
 
-    public boolean deleteCard(String cardID);
+    public boolean deleteCard(int cardID) throws SQLException;
 
 
 
