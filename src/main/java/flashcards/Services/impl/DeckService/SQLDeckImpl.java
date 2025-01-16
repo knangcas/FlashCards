@@ -48,13 +48,14 @@ public class SQLDeckImpl implements DeckService {
             ps1.setInt(1, deckID);
             resultSet = ps1.executeQuery();
             rval = new FlashCardDeck("");
+            rval.setDeckID(deckID);
             //question, answer, deckID (FK), deckName, CARDS.cardID
             boolean firstPass = false;
             while(resultSet.next()) {
 
                 if (!firstPass) {
                     rval.setName(resultSet.getString(4));
-                    rval.setDeckID(resultSet.getInt(3));
+                    //rval.setDeckID(resultSet.getInt(3));
                     rval.setSubject(resultSet.getString(6));
                 } //small optimization
                 FlashCard flashCard;
@@ -71,6 +72,7 @@ public class SQLDeckImpl implements DeckService {
                 resultSet2 = ps2.executeQuery();
                 while (resultSet2.next()) {
                     rval.setName(resultSet2.getString(1));
+
                 }
             }
 
@@ -116,6 +118,7 @@ public class SQLDeckImpl implements DeckService {
             resultSet = preparedStatement.executeQuery();
             while(resultSet.next()) {
                 rval.add((resultSet.getInt(1)));
+                //System.out.println("deckID returned: " + resultSet.getInt(1));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -126,7 +129,7 @@ public class SQLDeckImpl implements DeckService {
     }
 
     @Override
-    public boolean createDeck(FlashCardDeck deck, String username) throws SQLException {
+    public int createDeck(FlashCardDeck deck, String username) throws SQLException {
         connect();
         String query = "Insert into decks (deckName, username) values (?,?)";
         PreparedStatement preparedStatement = null;
@@ -155,7 +158,42 @@ public class SQLDeckImpl implements DeckService {
                 conn.close();
             }
         }
-        return false;
+
+
+        return getDeckByName(deck.getName(), username);
+    }
+
+    private int getDeckByName(String deckName, String username) throws SQLException {
+        //works because deckNames have a unique constraint with usernames.
+        connect();
+        int rval = 0;
+        String query = "select * from decks where decks.username = ? and  decks.deckName = ?";
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, deckName);
+            resultSet = preparedStatement.executeQuery();
+
+            while(resultSet.next()) {
+                rval = resultSet.getInt(1);
+            }
+
+
+        } catch (SQLException e) {
+            //name has to be unique
+        }   finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+
+        return rval;
+
     }
 
 

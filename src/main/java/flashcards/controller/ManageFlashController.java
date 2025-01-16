@@ -84,6 +84,13 @@ public class ManageFlashController {
 
     private List<FlashCard> cards;
 
+    private List<Integer> userDecks;
+
+    HashMap<Integer, FlashCardDeck> deckMap;
+    HashMap<String, Integer> deckIdMap;
+
+
+
 
 
 
@@ -103,11 +110,15 @@ public class ManageFlashController {
         cardListPane.setVisible(false);
         cardPane.setVisible(false);
         saveCardButton.setDisable(true);
+
+
     }
 
     private void userPopulateDeck() throws SQLException {
         List<Integer> decks = deckService.getDecks(loggedInUser);
-
+        for (int i : decks) {
+            System.out.println(i);
+        }
         for (int i : decks) {
             if (!loggedInUser.getDecks().containsKey(i)) {
                 loggedInUser.addDeck(i, deckService.getDeck(i));
@@ -123,15 +134,29 @@ public class ManageFlashController {
         deckList.getItems().clear();
         List<Integer> decks = deckService.getDecks(loggedInUser);
         quantityDeckLabel.setText(loggedInUser.getDeckQuantity() + " Decks");
-        userPopulateDeck();
-        HashMap<Integer, FlashCardDeck> deckMap = loggedInUser.getDecks();
-        HashMap<String, Integer> deckIdMap = new HashMap<>();
+        //userPopulateDeck();
+        deckMap = loggedInUser.getDecks();
+        deckIdMap = new HashMap<>();
 
         for (int deckID: deckMap.keySet()) {
+            //deckMap.get(deckID).setDeckID(deckID);
             deckIdMap.put(deckMap.get(deckID).getName(), deckID);
         }
 
+        for (FlashCardDeck fcd: deckMap.values()) {
+            System.out.println("fffff " + fcd.getDeckID());
+        }
+
+        System.out.println(deckMap);
+
+        for (String s: deckIdMap.keySet()) {
+            System.out.println(s);
+        }
+        System.out.println("deckID of newest: " + deckIdMap.get("newer"));
+
+
         for (int deckID: decks) {
+            System.out.println("dfdfd " + deckID);
             deckList.getItems().add(deckMap.get(deckID).getName());
         }
 
@@ -147,6 +172,7 @@ public class ManageFlashController {
                     currentDeckSubjectLabel.setText("");
                 } else {
                     currentDeck = null;
+                    System.out.println("deckCurrent: " + deckMap.get(deckIdMap.get((String)deckList.getSelectionModel().getSelectedItem())).getDeckID());
                     currentDeck = deckMap.get(deckIdMap.get(deckList.getSelectionModel().getSelectedItem()));
                     editDeckButton.setDisable(false);
                     deckDetailsPane.setVisible(false);
@@ -178,7 +204,7 @@ public class ManageFlashController {
         cardList.getItems().clear();
         System.out.println(cardList.getItems().size());
 
-        List<FlashCard> cards = currentDeck.getCardList();
+        cards = currentDeck.getCardList();
         quantityCardLabel.setText(cards.size() + " Cards");
 
         for (int i = 0; i < cards.size(); i++) {
@@ -208,6 +234,16 @@ public class ManageFlashController {
 
     }
 
+    private void updateCardList() {
+        cards.clear();
+        cards = currentDeck.getCardList();
+        cardList.getItems().clear();
+
+        for (int i = 0; i < cards.size(); i++) {
+            cardList.getItems().add(cards.get(i).getQuestion());
+        }
+    }
+
 
 
     private void populateQandA() {
@@ -224,7 +260,8 @@ public class ManageFlashController {
             try {
                 if (deckService.updateCard(currentCard)) {
                     System.out.println("Updated Card " + currentCard.getCardID());
-                    populateCards();
+                    updateCardList();
+                    //populateCards();
                 }
             } catch (SQLException e) {
                 // TODO alert connection issues
@@ -238,8 +275,9 @@ public class ManageFlashController {
                 System.out.println("deckID is " + newCard.getDeckID());
                 try {
                     deckService.addCard(newCard);
-                    currentDeck = deckService.getDeck(newCard.getDeckID());
-                    populateCards();
+                    //currentDeck = deckService.getDeck(newCard.getDeckID());
+                    addCardToDeck(newCard);
+                    //populateCards();
                     //currentDeck.addFlashCard(newCard);
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -248,6 +286,11 @@ public class ManageFlashController {
                 System.out.println("todo alert");
             }
         }
+    }
+
+    private void addCardToDeck(FlashCard new_card) {
+        currentDeck.addFlashCard(new_card);
+        cardList.getItems().add(new_card.getQuestion());
     }
 
     public void addCard(ActionEvent actionEvent) {
@@ -305,11 +348,23 @@ public class ManageFlashController {
             if (!deckSubjectField.getText().isEmpty()) {
                 newDeck.setSubject(deckSubjectField.getText());
             }
-            deckService.createDeck(newDeck, loggedInUser.getUsername());
-            deckDetailsPane.setVisible(false);
-            populateDeckList();
+            int deckID = deckService.createDeck(newDeck, loggedInUser.getUsername());
+            if (deckID > 0) {
+                deckDetailsPane.setVisible(false);
+                newDeck.setDeckID(deckID);
+                addToDeckList(newDeck);
+            }
 
         }
+    }
+
+    private void addToDeckList(FlashCardDeck deck) {
+
+        deckMap.put(deck.getDeckID(),deck);
+        deckIdMap.put(deck.getName(), deck.getDeckID());
+        deckList.getItems().add(deck.getName());
+        loggedInUser.addDeck(deck.getDeckID(),deck);
+
     }
 
     public void cancelDeck(ActionEvent actionEvent) {
