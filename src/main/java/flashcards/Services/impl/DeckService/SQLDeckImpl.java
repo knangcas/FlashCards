@@ -198,7 +198,34 @@ public class SQLDeckImpl implements DeckService {
 
 
     @Override
-    public boolean deleteDeck(FlashCardDeck deck) {
+    public boolean deleteDeck(FlashCardDeck deck) throws SQLException {
+        int deckID = deck.getDeckID();
+
+        String query = "DELETE FROM CARDS WHERE cards.deckID = ?";
+        PreparedStatement preparedStatement = null;
+        int result;
+        connect();
+        try {
+            preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setInt(1, deckID);
+            result = preparedStatement.executeUpdate();
+            if (result > 0) {
+                System.out.println(deckID + " has been deleted");
+            }
+            if (result == 0 ) {
+                System.out.println("Nothing deleted");
+            }
+        } catch (SQLException e) {
+
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+
         return false;
     }
 
