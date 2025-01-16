@@ -327,13 +327,35 @@ public class ManageFlashController {
         //addCard to currentDeck
     }
 
-    public void removeCard(ActionEvent actionEvent) {
+    public void removeCard(ActionEvent actionEvent) throws SQLException {
         //just remove card
+        int cardID = currentCard.getCardID();
+        deckService.deleteCard(cardID);
+
+        int currIndex = cardList.getSelectionModel().getSelectedIndex();
+
+        cardList.getSelectionModel().clearSelection();
+        cardList.getItems().remove(currIndex);
+
+        currentDeck.removeCard(cardID);
+        quantityCardLabel.setText(cardList.getItems().size() + " Cards");
+
+
+
     }
 
-    public void removeDeck(ActionEvent actionEvent) {
-        //cascade delete enabled in DB
-        //if not, delete manually
+    public void removeDeck(ActionEvent actionEvent) throws SQLException {
+        int deckID = currentDeck.getDeckID();
+        String deckName = currentDeck.getName();
+
+        deckService.deleteDeck(currentDeck);
+        int currIndex = deckList.getSelectionModel().getSelectedIndex();
+        deckList.getSelectionModel().clearSelection();
+        deckList.getItems().remove(currIndex);
+        deckMap.remove(deckID);
+        deckIdMap.remove(deckName);
+        quantityDeckLabel.setText(deckList.getItems().size() + " Decks");
+
     }
 
     public void addDeck(ActionEvent actionEvent) {

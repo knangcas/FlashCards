@@ -202,19 +202,35 @@ public class SQLDeckImpl implements DeckService {
         int deckID = deck.getDeckID();
 
         String query = "DELETE FROM CARDS WHERE cards.deckID = ?";
+        String query2 = "DELETE FROM DECKS WHERE decks.deckID = ?";
+
         PreparedStatement preparedStatement = null;
-        int result;
+        PreparedStatement preparedStatement2 = null;
+        int result, result2;
         connect();
         try {
             preparedStatement = conn.prepareStatement(query);
             preparedStatement.setInt(1, deckID);
             result = preparedStatement.executeUpdate();
             if (result > 0) {
+                System.out.println(deckID + " cards has been deleted");
+            }
+            if (result == 0 ) {
+                System.out.println("Nothing deleted");
+            }
+
+            preparedStatement2 = conn.prepareStatement(query2);
+            preparedStatement2.setInt(1, deckID);
+            result2 = preparedStatement2.executeUpdate();
+            if (result > 0) {
                 System.out.println(deckID + " has been deleted");
             }
             if (result == 0 ) {
                 System.out.println("Nothing deleted");
             }
+
+            conn.commit();
+
         } catch (SQLException e) {
 
         } finally {
