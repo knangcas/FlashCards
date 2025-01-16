@@ -56,6 +56,12 @@ public class ManageFlashController {
     private Label answerLabel;
 
     @FXML
+    private Button removeCardButton;
+
+    @FXML
+    private Button removeDeckButton;
+
+    @FXML
     private Pane cardPane;
 
     @FXML
@@ -82,6 +88,12 @@ public class ManageFlashController {
     @FXML
     private Button saveCardButton;
 
+    @FXML
+    private Label successLabel;
+
+    @FXML
+    private Pane successPane;
+
     private List<FlashCard> cards;
 
     private List<Integer> userDecks;
@@ -105,11 +117,14 @@ public class ManageFlashController {
         editDeckButton.setDisable(true);
         currentDeckLabel.setText("");
         currentDeckSubjectLabel.setText("");
+        successPane.setVisible(false);
 
         deckDetailsPane.setVisible(false);
         cardListPane.setVisible(false);
         cardPane.setVisible(false);
         saveCardButton.setDisable(true);
+        removeDeckButton.setDisable(true);
+        removeCardButton.setDisable(true);
 
 
     }
@@ -170,12 +185,14 @@ public class ManageFlashController {
                     deckDetailsPane.setVisible(false);
                     currentDeckLabel.setText("");
                     currentDeckSubjectLabel.setText("");
+                    removeDeckButton.setDisable(true);
                 } else {
                     currentDeck = null;
                     System.out.println("deckCurrent: " + deckMap.get(deckIdMap.get((String)deckList.getSelectionModel().getSelectedItem())).getDeckID());
                     currentDeck = deckMap.get(deckIdMap.get(deckList.getSelectionModel().getSelectedItem()));
                     editDeckButton.setDisable(false);
                     deckDetailsPane.setVisible(false);
+                    removeDeckButton.setDisable(false);
                     currentDeckLabel.setText("Selected Deck: " + currentDeck.getName());
                     if (currentDeck.getSubject() != null) {
                         currentDeckSubjectLabel.setText("Subject: " + currentDeck.getSubject());
@@ -218,9 +235,11 @@ public class ManageFlashController {
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
                 if (cardList.getSelectionModel().getSelectedItem() == null) {
                     cardPane.setVisible(false);
+                    removeCardButton.setDisable(true);
+
                 } else {
                     cardPane.setVisible(true);
-
+                    removeCardButton.setDisable(false);
 
                     if (cards.get(cardList.getSelectionModel().getSelectedIndex()).getQuestion().equals(cardList.getSelectionModel().getSelectedItem())) {
                         System.out.println("passed");
@@ -260,8 +279,10 @@ public class ManageFlashController {
             try {
                 if (deckService.updateCard(currentCard)) {
                     System.out.println("Updated Card " + currentCard.getCardID());
-                    updateCardList();
+                    cardList.getItems().set(cardList.getSelectionModel().getSelectedIndex(), questionTextArea.getText());
+                    //updateCardList();
                     //populateCards();
+                    successLabelChange("Card Saved!");
                 }
             } catch (SQLException e) {
                 // TODO alert connection issues
@@ -277,6 +298,7 @@ public class ManageFlashController {
                     deckService.addCard(newCard);
                     //currentDeck = deckService.getDeck(newCard.getDeckID());
                     addCardToDeck(newCard);
+                    successLabelChange("Card Added!");
                     //populateCards();
                     //currentDeck.addFlashCard(newCard);
                 } catch (SQLException e) {
@@ -291,6 +313,7 @@ public class ManageFlashController {
     private void addCardToDeck(FlashCard new_card) {
         currentDeck.addFlashCard(new_card);
         cardList.getItems().add(new_card.getQuestion());
+        quantityCardLabel.setText(cardList.getItems().size() + " Cards");
     }
 
     public void addCard(ActionEvent actionEvent) {
@@ -324,6 +347,7 @@ public class ManageFlashController {
 
     public void editDeck(ActionEvent actionEvent) {
         showDeckPane();
+        deckMainLabel.setText("Edit Deck");
 
     }
 
@@ -342,6 +366,10 @@ public class ManageFlashController {
                 currentDeck.setSubject(deckSubjectField.getText());
             }
             deckService.updateDeck(currentDeck);
+            int index = deckList.getSelectionModel().getSelectedIndex();
+            deckList.getItems().set(index, deckNameField.getText());
+            successLabelChange("Deck Updated!");
+
         } else {
             deckMainLabel.setText("New Deck");
             FlashCardDeck newDeck = new FlashCardDeck(deckNameField.getText());
@@ -353,6 +381,8 @@ public class ManageFlashController {
                 deckDetailsPane.setVisible(false);
                 newDeck.setDeckID(deckID);
                 addToDeckList(newDeck);
+                successLabelChange("Deck Created!");
+                quantityDeckLabel.setText(deckList.getItems().size() + " Decks");
             }
 
         }
@@ -377,11 +407,35 @@ public class ManageFlashController {
         }
     }
 
+    private void successLabelChange(String s) {
+        successLabel.setText(s);
+        deckDetailsPane.setVisible(false);
+        cardPane.setVisible(false);
+        cardListPane.setVisible(false);
+        successPane.setVisible(true);
+
+    }
+
     public void checkFields(KeyEvent keyEvent) {
         if (!questionTextArea.getText().isEmpty() && !answerTextArea.getText().isEmpty()) {
             saveCardButton.setDisable(false);
         } else {
             saveCardButton.setDisable(true);
         }
+    }
+
+    public void successOK(ActionEvent actionEvent) {
+        successPane.setVisible(false);
+        if (successLabel.getText().equals("Card Added!") || successLabel.getText().equals("Card Saved!")) {
+            successOK2();
+        }
+
+    }
+
+    private void successOK2() {
+        successPane.setVisible(false);
+        cardListPane.setVisible(true);
+        cardPane.setVisible(false);
+        cardList.getSelectionModel().clearSelection();
     }
 }

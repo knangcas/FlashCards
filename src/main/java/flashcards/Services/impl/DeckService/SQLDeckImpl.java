@@ -254,7 +254,7 @@ public class SQLDeckImpl implements DeckService {
         int cardID = card.getCardID();
         int deckID = card.getDeckID();
 
-
+        connect();
         String query = "Update cards Set cards.question = ?, cards.answer = ? Where cards.cardID = ?";
         PreparedStatement preparedStatement = null;
         //note, this can also be done with the updateXXX methods with a SELECT statement too.

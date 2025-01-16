@@ -26,8 +26,9 @@
 
 
 .borderlessField {
-    -fx-border-style: none;
-    -fx-background-color: white;
+    -fx-border-style: solid;
+    -fx-background-color: #97c4af;
+
 }
 
 .button {
