@@ -48,12 +48,14 @@ public class SQLDeckImpl implements DeckService {
             ps1.setInt(1, deckID);
             resultSet = ps1.executeQuery();
             rval = new FlashCardDeck("");
+            rval.setDeckID(deckID);
             //question, answer, deckID (FK), deckName, CARDS.cardID
             boolean firstPass = false;
             while(resultSet.next()) {
 
                 if (!firstPass) {
                     rval.setName(resultSet.getString(4));
+                    //rval.setDeckID(resultSet.getInt(3));
                     rval.setSubject(resultSet.getString(6));
                 } //small optimization
                 FlashCard flashCard;
@@ -70,6 +72,7 @@ public class SQLDeckImpl implements DeckService {
                 resultSet2 = ps2.executeQuery();
                 while (resultSet2.next()) {
                     rval.setName(resultSet2.getString(1));
+
                 }
             }
 
@@ -115,6 +118,7 @@ public class SQLDeckImpl implements DeckService {
             resultSet = preparedStatement.executeQuery();
             while(resultSet.next()) {
                 rval.add((resultSet.getInt(1)));
+                //System.out.println("deckID returned: " + resultSet.getInt(1));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -125,7 +129,7 @@ public class SQLDeckImpl implements DeckService {
     }
 
     @Override
-    public boolean createDeck(FlashCardDeck deck, String username) throws SQLException {
+    public int createDeck(FlashCardDeck deck, String username) throws SQLException {
         connect();
         String query = "Insert into decks (deckName, username) values (?,?)";
         PreparedStatement preparedStatement = null;
@@ -135,14 +139,14 @@ public class SQLDeckImpl implements DeckService {
             preparedStatement.setString(1, deck.getName());
             preparedStatement.setString(2, username);
             result = preparedStatement.executeUpdate();
-
+            conn.commit();
             if (result == 0) {
                 //name has to be unique
-                return false;
+                //return false;
             }
 
             if (result > 0) {
-                return true;
+                //return true;
             }
         } catch (SQLException e) {
             //name has to be unique
@@ -154,12 +158,90 @@ public class SQLDeckImpl implements DeckService {
                 conn.close();
             }
         }
-        return false;
+
+
+        return getDeckByName(deck.getName(), username);
+    }
+
+    private int getDeckByName(String deckName, String username) throws SQLException {
+        //works because deckNames have a unique constraint with usernames.
+        connect();
+        int rval = 0;
+        String query = "select * from decks where decks.username = ? and  decks.deckName = ?";
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setString(1, username);
+            preparedStatement.setString(2, deckName);
+            resultSet = preparedStatement.executeQuery();
+
+            while(resultSet.next()) {
+                rval = resultSet.getInt(1);
+            }
+
+
+        } catch (SQLException e) {
+            //name has to be unique
+        }   finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+
+        return rval;
+
     }
 
 
     @Override
-    public boolean deleteDeck(FlashCardDeck deck) {
+    public boolean deleteDeck(FlashCardDeck deck) throws SQLException {
+        int deckID = deck.getDeckID();
+
+        String query = "DELETE FROM CARDS WHERE cards.deckID = ?";
+        String query2 = "DELETE FROM DECKS WHERE decks.deckID = ?";
+
+        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement2 = null;
+        int result, result2;
+        connect();
+        try {
+            preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setInt(1, deckID);
+            result = preparedStatement.executeUpdate();
+            if (result > 0) {
+                System.out.println(deckID + " cards has been deleted");
+            }
+            if (result == 0 ) {
+                System.out.println("Nothing deleted");
+            }
+
+            preparedStatement2 = conn.prepareStatement(query2);
+            preparedStatement2.setInt(1, deckID);
+            result2 = preparedStatement2.executeUpdate();
+            if (result > 0) {
+                System.out.println(deckID + " has been deleted");
+            }
+            if (result == 0 ) {
+                System.out.println("Nothing deleted");
+            }
+
+            conn.commit();
+
+        } catch (SQLException e) {
+
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+
         return false;
     }
 
@@ -186,13 +268,13 @@ public class SQLDeckImpl implements DeckService {
             preparedStatement.setString(2, deckSubject);
             preparedStatement.setInt(3, deckID);
             result = preparedStatement.executeUpdate();
-
+            conn.commit();
             if (result > 0) {
-                return true;
+                //return true;
             }
 
             if (result == 0) {
-                return false;
+                //return false;
             }
         } catch (SQLException e) {
             System.out.println("sqlerror");
@@ -215,7 +297,7 @@ public class SQLDeckImpl implements DeckService {
         int cardID = card.getCardID();
         int deckID = card.getDeckID();
 
-
+        connect();
         String query = "Update cards Set cards.question = ?, cards.answer = ? Where cards.cardID = ?";
         PreparedStatement preparedStatement = null;
         //note, this can also be done with the updateXXX methods with a SELECT statement too.
@@ -228,6 +310,7 @@ public class SQLDeckImpl implements DeckService {
 
 
             int result = preparedStatement.executeUpdate();
+            conn.commit();
             if (result == 0) {
                 throw new FlashCardNullException();
             }
@@ -274,11 +357,12 @@ public class SQLDeckImpl implements DeckService {
             }
             if (result > 0) {
                 System.out.println("insert success");
+                conn.commit();
                 return true;
             }
 
         } catch (SQLException e) {
-            //TODO
+            e.printStackTrace();
         } finally {
             if (preparedStatement != null) {
                 preparedStatement.close();

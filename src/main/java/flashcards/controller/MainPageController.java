@@ -87,7 +87,7 @@ public class MainPageController {
 
     }
 
-    public void manageDecks(ActionEvent actionEvent) throws IOException {
+    public void manageDecks(ActionEvent actionEvent) throws IOException, SQLException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("ManageFlash.fxml"));
         AnchorPane l = fxmlLoader.load();
         ManageFlashController manageFlashController = fxmlLoader.getController();
