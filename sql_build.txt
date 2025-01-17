@@ -1,0 +1,45 @@
+this file contains the sql queries needed to create the database.
+For this project, I used MySQL, but you can probably use any SQL db
+and adjust the driver/url accordingly.
+
+
+CREATE TABLE USERS (
+	username VARCHAR(25) NOT NULL,
+	password VARCHAR(25) NOT NULL,
+	PRIMARY KEY (username)
+);
+
+CREATE TABLE DECKS (
+	deckID int NOT NULL auto_increment,
+	deckName VARCHAR(50) NOT NULL,
+	username VARCHAR(25) NOT NULL,
+	subject VARCHAR(50),
+	PRIMARY KEY(deckID),
+	FOREIGN KEY(username) REFERENCES USERS(username)
+);
+
+
+
+CREATE TABLE CARDS (
+	question VARCHAR(500) NOT NULL,
+	answer VARCHAR(500) NOT NULL,
+	deckID int NOT NULL,
+	cardID int auto_increment,
+	PRIMARY KEY(cardID),
+	FOREIGN KEY(deckID) REFERENCES DECKS(deckID)
+);
+
+alter table decks
+add constraint uq_decks UNIQUE (deckName, username);
+
+INSERT INTO USERS
+VALUES ('admin', 'password');
+
+INSERT INTO USERS
+VALUES ('admin2', 'password2');
+
+INSERT INTO DECKS (deckName, username)
+VALUES ('testDeck', 'admin') ;
+
+INSERT INTO CARDS (question, answer, deckId)
+VALUES ('What is a 1+1?', '2', 1) ;
