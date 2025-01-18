@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="649.0" prefWidth="1056.0" styleClass="mainPane" stylesheets="@styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="flashcards.controller.ManageFlashController">
+<AnchorPane prefHeight="649.0" prefWidth="1056.0" styleClass="mainPane" stylesheets="@styles/styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="flashcards.controller.ManageFlashController">
    <children>
       <Pane layoutX="24.0" layoutY="14.0" prefHeight="121.0" prefWidth="1015.0">
          <children>
@@ -68,9 +68,9 @@
                   <Font size="48.0" />
                </font>
             </Label>
-            <TextField fx:id="deckNameField" layoutX="179.0" layoutY="214.0" prefHeight="25.0" prefWidth="224.0" styleClass="borderlessField" />
+            <TextField fx:id="deckNameField" layoutX="179.0" layoutY="214.0" onKeyReleased="#checkNull" prefHeight="25.0" prefWidth="224.0" styleClass="borderlessField" />
             <TextField fx:id="deckSubjectField" layoutX="179.0" layoutY="243.0" prefHeight="25.0" prefWidth="224.0" styleClass="borderlessField" />
-            <Button layoutX="322.0" layoutY="291.0" mnemonicParsing="false" onAction="#saveDeck" prefHeight="25.0" prefWidth="76.0" text="Save" />
+            <Button fx:id="saveDeckButton" layoutX="322.0" layoutY="291.0" mnemonicParsing="false" onAction="#saveDeck" prefHeight="25.0" prefWidth="76.0" text="Save" />
             <Button layoutX="232.0" layoutY="291.0" mnemonicParsing="false" onAction="#cancelDeck" prefHeight="25.0" prefWidth="76.0" text="Cancel" />
          </children>
       </Pane>

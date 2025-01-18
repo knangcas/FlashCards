@@ -94,6 +94,9 @@ public class ManageFlashController {
     @FXML
     private Pane successPane;
 
+    @FXML
+    private Button saveDeckButton;
+
     private List<FlashCard> cards;
 
     private List<Integer> userDecks;
@@ -118,6 +121,7 @@ public class ManageFlashController {
         currentDeckLabel.setText("");
         currentDeckSubjectLabel.setText("");
         successPane.setVisible(false);
+
 
         deckDetailsPane.setVisible(false);
         cardListPane.setVisible(false);
@@ -188,14 +192,19 @@ public class ManageFlashController {
                     removeDeckButton.setDisable(true);
                 } else {
                     currentDeck = null;
-                    System.out.println("deckCurrent: " + deckMap.get(deckIdMap.get((String)deckList.getSelectionModel().getSelectedItem())).getDeckID());
+                    System.out.println(deckIdMap);
+                    System.out.println("current selected deckID: " + deckIdMap.get(deckList.getSelectionModel().getSelectedItem()));
+                    System.out.println("deckCurrent: " + deckMap.get(deckIdMap.get(deckList.getSelectionModel().getSelectedItem())).getDeckID());
                     currentDeck = deckMap.get(deckIdMap.get(deckList.getSelectionModel().getSelectedItem()));
                     editDeckButton.setDisable(false);
                     deckDetailsPane.setVisible(false);
                     removeDeckButton.setDisable(false);
+                    currentDeckLabel.setVisible(true);
                     currentDeckLabel.setText("Selected Deck: " + currentDeck.getName());
                     if (currentDeck.getSubject() != null) {
                         currentDeckSubjectLabel.setText("Subject: " + currentDeck.getSubject());
+                    } else {
+                        currentDeckSubjectLabel.setText("Subject: ");
                     }
                     cardListPane.setVisible(true);
                     cardList.setVisible(true);
@@ -359,8 +368,8 @@ public class ManageFlashController {
     }
 
     public void addDeck(ActionEvent actionEvent) {
-        showDeckPane();
         deckList.getSelectionModel().clearSelection();
+        showDeckPane();
         currentDeck = null;
         deckMainLabel.setText("New Deck");
 
@@ -369,6 +378,8 @@ public class ManageFlashController {
 
     public void editDeck(ActionEvent actionEvent) {
         showDeckPane();
+        deckNameField.setText(currentDeck.getName());
+        deckSubjectField.setText(currentDeck.getSubject());
         deckMainLabel.setText("Edit Deck");
 
     }
@@ -382,15 +393,34 @@ public class ManageFlashController {
 
     public void saveDeck(ActionEvent actionEvent) throws SQLException {
         if (currentDeck != null) {
+            int index = deckList.getSelectionModel().getSelectedIndex();
             deckMainLabel.setText("Edit Deck");
+            String oldName = currentDeck.getName();
+            String newName = null;
             if (!deckNameField.getText().isEmpty()) {
-                currentDeck.setName(deckNameField.getText());
-                currentDeck.setSubject(deckSubjectField.getText());
+                if (!deckNameField.getText().equals(oldName)) {
+                    newName = deckNameField.getText();
+                    currentDeck.setName(deckNameField.getText());
+                }
+                if (deckSubjectField.getText() != null) {
+                    if (!deckSubjectField.getText().equals(currentDeck.getSubject())) {
+                        currentDeck.setSubject(deckSubjectField.getText());
+                    }
+                }
             }
             deckService.updateDeck(currentDeck);
-            int index = deckList.getSelectionModel().getSelectedIndex();
+            System.out.println(currentDeck.getName());
+            System.out.println(loggedInUser.getDecks().get(currentDeck.getDeckID()).getName());
+            deckList.getSelectionModel().clearSelection();
             deckList.getItems().set(index, deckNameField.getText());
+
+            if (newName != null) {
+                deckIdMap.remove(oldName);
+                deckIdMap.put(newName, currentDeck.getDeckID());
+            }
+
             successLabelChange("Deck Updated!");
+
 
         } else {
             deckMainLabel.setText("New Deck");
@@ -459,5 +489,13 @@ public class ManageFlashController {
         cardListPane.setVisible(true);
         cardPane.setVisible(false);
         cardList.getSelectionModel().clearSelection();
+    }
+
+    public void checkNull(KeyEvent keyEvent) {
+        if (deckNameField.getText().isEmpty()) {
+            saveDeckButton.setDisable(true);
+        } else {
+            saveDeckButton.setDisable(false);
+        }
     }
 }
