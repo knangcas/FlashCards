@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="mainPane" prefHeight="852.0" prefWidth="1482.0" stylesheets="@styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="flashcards.controller.MainPageController">
+<AnchorPane id="mainPane" prefHeight="852.0" prefWidth="1482.0" stylesheets="@styles/styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="flashcards.controller.MainPageController">
    <children>
       <Pane layoutY="9.0" prefHeight="96.0" prefWidth="1421.0">
          <children>
@@ -23,7 +23,7 @@
          <left>
             <Pane fx:id="menuPane" prefHeight="858.0" prefWidth="192.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button layoutX="49.0" layoutY="64.0" mnemonicParsing="false" onAction="#testButton" prefHeight="27.0" prefWidth="94.0" text="test" />
+                  <Button layoutX="49.0" layoutY="64.0" mnemonicParsing="false" onAction="#testButton" prefHeight="27.0" prefWidth="94.0" text="Study Cards" />
                   <Button layoutX="49.0" layoutY="114.0" mnemonicParsing="false" onAction="#manageDecks" prefHeight="27.0" prefWidth="94.0" text="Manage Decks" />
                   <Button layoutX="48.0" layoutY="171.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="96.0" text="Button" />
                </children>

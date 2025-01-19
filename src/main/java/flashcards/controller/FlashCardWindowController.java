@@ -2,15 +2,22 @@ package flashcards.controller;
 
 import flashcards.MainWrapper;
 import flashcards.Services.DeckService;
+import flashcards.UserManagement;
 import flashcards.model.FlashCard;
 import flashcards.model.FlashCardDeck;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 
+import java.nio.channels.Channel;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 public class FlashCardWindowController {
 
@@ -40,26 +47,92 @@ public class FlashCardWindowController {
 
     private FlashCard currentCard;
 
+    @FXML
+    private Pane selectDeckPane;
+
+    @FXML
+    private ListView<String> deckList;
+
+    @FXML
+    private Label quantityDeckLabel;
+
+    @FXML
+    private Button okButton;
+
+    @FXML
+    private Pane endPane;
+
+    @FXML
+    private Label deckSubjectLabel;
+
+    @FXML
+    private Pane flashPane;
+
+    @FXML
+    private Label noDecksLabel;
+
+    @FXML
+    private Button skippedCardsButton;
+
+    private int skipped;
+
+    private HashMap<Integer, FlashCardDeck> deckMap;
+
+    private HashMap<String, Integer> deckIdMap;
+
+
+
     DeckService deckService;
 
 
     public void initializeDeck(FlashCardDeck deck2) throws SQLException {
         //this.deck = deck;
+        selectDeckPane.setVisible(true);
+        flashPane.setVisible(false);
+        endPane.setVisible(false);
+        noDecksLabel.setVisible(false);
 
         deckService = DeckService.getInstance(MainWrapper.SERVICE);
+        deckMap = UserManagement.getActiveUser().getDecks();
+        deckIdMap = new HashMap<>();
+
+        for (int deckID: deckMap.keySet()) {
+            deckIdMap.put(deckMap.get(deckID).getName(), deckID);
+        }
+
+
 
         // temporary
-        deck = deckService.getDeck(1);
 
+        //deck = deckService.getDeck(1);
+        populateDeckList();
         //FlashCard card1 = new FlashCard("What is a pointer?", "A pointer is a reference to an address in memory.");
         //FlashCard card2 = new FlashCard("Does python need semicolons?", "No");
 
-        deckNameLabel.setText(deck.getName());
-        contentLabel.setText(deck.getCard().getQuestion());
-        currentCard = deck.getCard();
-        total = deck.getSize();
-        progress = 1;
+
     }
+
+    private void populateDeckList() {
+        deckList.getItems().addAll(deckIdMap.keySet());
+        if (deckList.getItems().size() == 0) {
+            deckList.setVisible(false);
+            noDecksLabel.setVisible(true);
+        }
+
+        quantityDeckLabel.setText(deckList.getItems().size() + " Decks");
+        deckList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (deckList.getSelectionModel().getSelectedItem() == null) {
+                    okButton.setDisable(true);
+                } else {
+                    okButton.setDisable(false);
+                }
+            }
+        });
+    }
+
+
 
     public void test(MouseEvent mouseEvent) {
         flip();
@@ -77,17 +150,28 @@ public class FlashCardWindowController {
 
     }
 
+
     public void nextCard(ActionEvent actionEvent) {
         deck.correctChoice();
+        progress++;
+        getNextCard();
+
+    }
+
+    public void getNextCard() {
         if (!deck.isEmpty()) {
             currentCard = deck.getCard();
             contentLabel.setText(currentCard.getQuestion());
-            progress++;
             updateProgress();
         } else {
-            contentLabel.setText("YOU HAVE REACHED THE END BRUH");
+            flashPane.setVisible(false);
+            endPane.setVisible(true);
+            if (deck.getSkippedSize() > 0) {
+                skippedCardsButton.setVisible(true);
+            } else {
+                skippedCardsButton.setVisible(false);
+            }
         }
-
     }
 
     private void updateProgress() {
@@ -95,14 +179,76 @@ public class FlashCardWindowController {
     }
 
     private void updateSkipped() {
-
+        skippedLabel.setText("Skipped " + skipped + " Cards");
     }
 
 
     public void skipCard(ActionEvent actionEvent) {
-
+        deck.skipCard();
+        skipped++;
+        updateSkipped();
+        getNextCard();
     }
 
     public void shuffleAndRestart(ActionEvent actionEvent) {
+        System.out.println(deck.toString());
+        deck.shuffle();
+        progress = 1;
+        skipped = 0;
+        currentCard = deck.getCard();
+        contentLabel.setText(currentCard.getQuestion());
+        updateSkipped();
+        updateProgress();
+        endPane.setVisible(false);
+        flashPane.setVisible(true);
+        System.out.println(deck.toString());
+    }
+
+    public void selectDeck(ActionEvent actionEvent) {
+        if (endPane.isVisible()) {
+            endPane.setVisible(false);
+        }
+
+
+        try {
+            deck = deckService.getDeck(deckIdMap.get(deckList.getSelectionModel().getSelectedItem()));
+            deckNameLabel.setText(deck.getName());
+            contentLabel.setText(deck.getCard().getQuestion());
+            currentCard = deck.getCard();
+            total = deck.getSize();
+            progress = 1;
+            skipped = 0;
+            updateSkipped();
+            updateProgress();
+            if (deck.getSubject() != null) {
+                deckSubjectLabel.setText(deck.getSubject());
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        selectDeckPane.setVisible(false);
+        flashPane.setVisible(true);
+
+    }
+
+
+    public void selectNewDeck(ActionEvent actionEvent) {
+        selectDeckPane.setVisible(true);
+        flashPane.setVisible(false);
+        endPane.setVisible(false);
+    }
+
+    public void loadSkippedCards(ActionEvent actionEvent) {
+        deck.moveSkipped();
+        skipped = 0;
+        progress = 1;
+        total = deck.getSize();
+        updateProgress();
+        updateSkipped();
+        currentCard = deck.getCard();
+        endPane.setVisible(false);
+        flashPane.setVisible(true);
     }
 }

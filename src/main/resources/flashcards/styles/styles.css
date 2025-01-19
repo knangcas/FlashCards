@@ -12,15 +12,15 @@
     -fx-background-color: white;
 }
 
-#fcMainPane {
-    -fx-border-width: 5;
+.flashCardCard {
+    -fx-border-width: 2;
     -fx-border-radius: 10;
     -fx-border-style: solid;
 }
 
 #menuPane {
     -fx-border-width: 5;
-    -fx-border-radius: 10;
+    -fx-border-radius: 5;
     -fx-border-style: solid;
 }
 

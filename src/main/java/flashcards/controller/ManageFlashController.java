@@ -29,13 +29,13 @@ public class ManageFlashController {
     private FlashCard currentCard;
 
     @FXML
-    private ListView deckList;
+    private ListView<String> deckList;
 
     @FXML
     private Label quantityDeckLabel;
 
     @FXML
-    private ListView cardList;
+    private ListView<String> cardList;
 
     @FXML
     private Label currentDeckLabel;

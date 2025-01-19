@@ -17,7 +17,7 @@ public class FlashCardDeck{
 
     private Stack<FlashCard> incorrect;
 
-    private Queue<FlashCard> skipped;
+    private Stack<FlashCard> skipped;
 
     private int size;
 
@@ -123,7 +123,7 @@ public class FlashCardDeck{
 
         incorrect = new Stack<>();
 
-        skipped = new LinkedList<>();
+        skipped = new Stack<>();
 
         cards = new ArrayList<>();
     }
@@ -134,6 +134,10 @@ public class FlashCardDeck{
         }
 
         return null;
+    }
+
+    public int getSkippedSize() {
+        return skipped.size();
     }
 
 
@@ -147,6 +151,12 @@ public class FlashCardDeck{
 
     public void incorrectChoice() {
         incorrect.push(deck.pop());
+    }
+
+    public void moveSkipped() {
+        while (!skipped.isEmpty()) {
+            deck.push(skipped.pop());
+        }
     }
 
 
@@ -172,7 +182,7 @@ public class FlashCardDeck{
 
             if (n1>n2) {
                 shuffle1.push(deck.pop());
-            } else if (n2<n1) {
+            } else if (n2>n1) {
                 shuffle2.push(deck.pop());
             } else {
                 correct.push(deck.pop());
@@ -195,14 +205,12 @@ public class FlashCardDeck{
             resetDeckHelper(incorrect);
         }
         if (skipped.size() > 0) {
-            while (skipped.size()>0) {
-                deck.push(skipped.remove());
-            }
+            resetDeckHelper(skipped);
         }
     }
 
     private void resetDeckHelper(Stack<FlashCard> cards) {
-        for (int i = 0; i < cards.size() ; i++) {
+        while (!cards.isEmpty()) {
             deck.push(cards.pop());
         }
     }
@@ -215,6 +223,11 @@ public class FlashCardDeck{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "deck contents: " + deck.toString();
     }
 
 
