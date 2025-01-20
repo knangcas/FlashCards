@@ -4,6 +4,12 @@ import flashcards.Services.UserService;
 import flashcards.model.User;
 import flashcards.model.exception.FlashcardsConnectionException;
 
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
 import java.sql.SQLException;
 import java.util.HashMap;
 
@@ -29,6 +35,19 @@ public class UserManagement {
         return activeUser;
     }
 
+    public void saltPassword() throws NoSuchAlgorithmException, InvalidKeySpecException {
+        String password = "password";
+        SecureRandom random = new SecureRandom();
+        byte[] salt = new byte[16];
+        random.nextBytes(salt);
+
+        KeySpec spec = new PBEKeySpec(password.toCharArray(), salt, 1000, 128);
+        SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+        byte[] hash = factory.generateSecret(spec).getEncoded();
+
+        System.out.println(hash);
+    }
+
     public static boolean validateUser(String username, String password) throws SQLException {
 
         //TODO salt passwords
@@ -36,6 +55,8 @@ public class UserManagement {
         UserService userService = UserService.getInstance(MainWrapper.SERVICE);
 
         User user = null;
+
+
         if (userService != null) {
             try {
                 user = userService.getUser(username);

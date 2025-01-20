@@ -55,7 +55,10 @@ public class SQLUserImpl implements UserService {
 
             while (resultSet.next()) {
                 if (resultSet.getString(1).equals(username)) {
-                    rval = new User(username, resultSet.getString(2));
+                    rval = new User(username, "whatever");
+                    rval.setByteLength1(resultSet.getBytes(3).length);
+                    System.out.println("from db salthashlength: " + resultSet.getBytes(3).length);
+                    rval.setSH(resultSet.getBytes(2), resultSet.getBytes(3));
                     return rval;
                 }
             }
@@ -145,5 +148,58 @@ public class SQLUserImpl implements UserService {
 
 
         return null;
+    }
+
+    public void addUser(byte[] salt, byte[] saltHash, String username) throws SQLException {
+        connect();
+
+        String query = "INSERT INTO USERS (username, salt, saltHash) VALUES(?,?,?)";
+        PreparedStatement preparedStatement = null;
+        int result;
+        try {
+            preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setString(1, username);
+            preparedStatement.setBytes(2,salt);
+            preparedStatement.setBytes(3,saltHash);
+            result = preparedStatement.executeUpdate();
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (conn != null) {
+                conn.close();
+            }
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+        }
+    }
+
+    public void updateUser(byte[] salt, byte[] saltHash, String username) throws SQLException {
+        connect();
+
+        String query = "UPDATE users SET salt = ?, saltHash = ? WHERE username = ?";
+
+        PreparedStatement preparedStatement = null;
+        int result;
+        try {
+            preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setString(3, username);
+            preparedStatement.setBytes(1,salt);
+            preparedStatement.setBytes(2,saltHash);
+            result = preparedStatement.executeUpdate();
+
+            System.out.println("thisresult :" + result);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (conn != null) {
+                conn.close();
+            }
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+        }
     }
 }
