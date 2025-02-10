@@ -20,6 +20,10 @@
     -fx-background-color: #525252;
 }
 
+.flashCardCard:hover{
+    -fx-cursor: hand;
+}
+
 #manageDeckPane {
     -fx-background-color: #383838;
     -fx-text-fill: white;

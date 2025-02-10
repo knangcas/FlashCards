@@ -14,7 +14,7 @@
             <Button fx:id="nextButton" layoutX="858.0" layoutY="560.0" mnemonicParsing="false" onAction="#nextCard" prefHeight="27.0" prefWidth="90.0" text="Next" />
             <Label fx:id="deckNameLabel" layoutX="21.0" layoutY="14.0" styleClass="text" text="DeckName">
                <font>
-                  <Font size="54.0" />
+                  <Font size="49.0" />
                </font>
             </Label>
             <Button fx:id="skipButton" layoutX="753.0" layoutY="560.0" mnemonicParsing="false" onAction="#skipCard" prefHeight="27.0" prefWidth="90.0" text="Skip" />
@@ -23,9 +23,9 @@
             <Label fx:id="skippedLabel" layoutX="741.0" layoutY="69.0" prefHeight="17.0" prefWidth="138.0" styleClass="text" text="Skipped x Cards" />
             <Pane fx:id="flashCardPane" layoutX="21.0" layoutY="109.0" prefHeight="438.0" prefWidth="929.0" styleClass="flashCardCard" stylesheets="@styles/styles.css">
                <children>
-                  <Label fx:id="contentLabel" layoutX="45.0" layoutY="14.0" prefHeight="403.0" prefWidth="870.0" styleClass="text" text="Question">
+                  <Label fx:id="contentLabel" alignment="TOP_LEFT" layoutX="45.0" layoutY="82.0" prefHeight="335.0" prefWidth="870.0" styleClass="text" text="Question">
                      <font>
-                        <Font size="31.0" />
+                        <Font size="25.0" />
                      </font></Label>
                </children>
             </Pane>
