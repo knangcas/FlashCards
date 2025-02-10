@@ -4,6 +4,14 @@ Personal project to get familiar with working with a few technologies.
 
 ![Screenshot1](https://github.com/knangcas/FlashCards/blob/main/Screenshots/ss1.png?raw=true)
 
+![Screenshot2](https://github.com/knangcas/FlashCards/blob/main/Screenshots/ss2.png?raw=true)
+
+![Screenshot3](https://github.com/knangcas/FlashCards/blob/main/Screenshots/ss3.png?raw=true)
+
+![Screenshot4](https://github.com/knangcas/FlashCards/blob/main/Screenshots/ss4.png?raw=true)
+
+![Screenshot5](https://github.com/knangcas/FlashCards/blob/main/Screenshots/ss5.png?raw=true)
+
 
 Supports multiple users.
 Each user can create decks.

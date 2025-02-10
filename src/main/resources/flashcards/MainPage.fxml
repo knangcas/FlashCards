@@ -2,6 +2,8 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.Bloom?>
+<?import javafx.scene.effect.Shadow?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
@@ -9,16 +11,32 @@
 
 <AnchorPane id="mainPane" prefHeight="855.0" prefWidth="1018.0" stylesheets="@styles/styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="flashcards.controller.MainPageController">
    <children>
-      <Pane layoutX="22.0" layoutY="28.0" prefHeight="96.0" prefWidth="1000.0">
+      <Pane layoutX="22.0" layoutY="9.0" prefHeight="115.0" prefWidth="987.0">
          <children>
-            <Label fx:id="welcomeText" layoutX="14.0" layoutY="14.0" prefHeight="68.0" prefWidth="942.0" text="Welcome, " textFill="#e4e4e4">
+            <Label fx:id="welcomeText" layoutX="5.0" layoutY="72.0" prefHeight="40.0" prefWidth="537.0" text="Welcome, " textFill="WHITE">
                <font>
-                  <Font name="Calibri" size="56.0" />
+                  <Font size="23.0" />
                </font>
             </Label>
             <Button id="logout-button" fx:id="logOutButton" layoutX="890.0" layoutY="35.0" mnemonicParsing="false" onAction="#logOut" prefHeight="27.0" prefWidth="91.0" text="Log Out" textFill="#d7d7d7" />
             <Button layoutX="782.0" layoutY="35.0" mnemonicParsing="false" onAction="#manageDecks" prefHeight="27.0" prefWidth="94.0" text="Manage Decks" textFill="#d7d7d7" />
             <Button layoutX="675.0" layoutY="35.0" mnemonicParsing="false" onAction="#testButton" prefHeight="27.0" prefWidth="94.0" text="Study Cards" textFill="#d7d7d7" />
+            <Label layoutX="5.0" layoutY="8.0" prefHeight="64.0" prefWidth="537.0" styleClass="text" text="F L A S H C A R D S">
+               <font>
+                  <Font size="43.0" />
+               </font>
+               <effect>
+                  <Shadow />
+               </effect>
+            </Label>
+            <Label layoutX="5.0" layoutY="8.0" prefHeight="64.0" prefWidth="537.0" styleClass="text" text="F L A S H C A R D S">
+               <font>
+                  <Font size="43.0" />
+               </font>
+               <effect>
+                  <Bloom threshold="0.39" />
+               </effect>
+            </Label>
          </children>
       </Pane>
       <BorderPane fx:id="borderPane" layoutY="140.0" prefHeight="715.0" prefWidth="1019.0" />
