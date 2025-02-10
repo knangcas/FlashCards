@@ -5,6 +5,9 @@ import flashcards.Services.DeckService;
 import flashcards.UserManagement;
 import flashcards.model.FlashCard;
 import flashcards.model.FlashCardDeck;
+import javafx.animation.FadeTransition;
+import javafx.animation.Interpolator;
+import javafx.animation.RotateTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -14,6 +17,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.transform.Rotate;
+import javafx.util.Duration;
 
 import java.nio.channels.Channel;
 import java.sql.SQLException;
@@ -67,6 +72,9 @@ public class FlashCardWindowController {
 
     @FXML
     private Pane flashPane;
+
+    @FXML
+    private Pane flashCardPane;
 
     @FXML
     private Label noDecksLabel;
@@ -140,6 +148,15 @@ public class FlashCardWindowController {
     }
 
     private void flip() {
+
+        RotateTransition rotateTransition = new RotateTransition();
+        rotateTransition.setNode(flashCardPane);
+        rotateTransition.setDuration(Duration.millis(500));
+        rotateTransition.setInterpolator(Interpolator.EASE_BOTH);
+        rotateTransition.setAxis(Rotate.Y_AXIS);
+        rotateTransition.setByAngle(360);
+        rotateTransition.play();
+
         if (currentCard.isQuestionSide()) {
             contentLabel.setText(currentCard.getAnswer());
             currentCard.setQuestionSide(false);
@@ -147,6 +164,7 @@ public class FlashCardWindowController {
             contentLabel.setText(currentCard.getQuestion());
             currentCard.setQuestionSide(true);
         }
+
 
     }
 
@@ -187,6 +205,18 @@ public class FlashCardWindowController {
         deck.skipCard();
         skipped++;
         updateSkipped();
+        /*FadeTransition fadeTransition = new FadeTransition();
+        fadeTransition.setNode(flashCardPane);
+        fadeTransition.setDuration(Duration.millis(500));
+        fadeTransition.setInterpolator(Interpolator.EASE_BOTH);
+        fadeTransition.setFromValue(1);
+        fadeTransition.setToValue(0);
+        fadeTransition.setCycleCount(2);
+        fadeTransition.setAutoReverse(true);
+        fadeTransition.play();*/
+
+
+
         getNextCard();
     }
 

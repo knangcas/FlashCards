@@ -21,7 +21,7 @@
             <Button fx:id="restartButton" layoutX="650.0" layoutY="560.0" mnemonicParsing="false" onAction="#shuffleAndRestart" prefHeight="27.0" prefWidth="90.0" text="Restart" />
             <Label fx:id="progressLabel" layoutX="879.0" layoutY="69.0" prefHeight="17.0" prefWidth="138.0" styleClass="text" text="Card X of X" />
             <Label fx:id="skippedLabel" layoutX="741.0" layoutY="69.0" prefHeight="17.0" prefWidth="138.0" styleClass="text" text="Skipped x Cards" />
-            <Pane layoutX="21.0" layoutY="109.0" prefHeight="438.0" prefWidth="929.0" styleClass="flashCardCard" stylesheets="@styles/styles.css">
+            <Pane fx:id="flashCardPane" layoutX="21.0" layoutY="109.0" prefHeight="438.0" prefWidth="929.0" styleClass="flashCardCard" stylesheets="@styles/styles.css">
                <children>
                   <Label fx:id="contentLabel" layoutX="45.0" layoutY="14.0" prefHeight="403.0" prefWidth="870.0" styleClass="text" text="Question">
                      <font>
@@ -42,7 +42,7 @@
             <ListView fx:id="deckList" layoutX="290.0" layoutY="108.0" prefHeight="454.0" prefWidth="348.0" />
             <Label fx:id="quantityDeckLabel" layoutX="437.0" layoutY="83.0" prefHeight="17.0" prefWidth="53.0" styleClass="text" text="X Decks" textAlignment="RIGHT" />
             <Label fx:id="noDecksLabel" layoutX="327.0" layoutY="294.0" prefHeight="66.0" prefWidth="304.0" styleClass="text" text="You have no decks. Create one in deck management." />
-            <Button fx:id="okButton" layoutX="545.0" layoutY="562.0" mnemonicParsing="false" onAction="#selectDeck" prefHeight="27.0" prefWidth="90.0" text="OK" />
+            <Button fx:id="okButton" layoutX="545.0" layoutY="565.0" mnemonicParsing="false" onAction="#selectDeck" prefHeight="27.0" prefWidth="90.0" text="OK" />
          </children>
       </Pane>
       <Pane fx:id="endPane" layoutX="19.0" layoutY="118.0" prefHeight="502.0" prefWidth="947.0">
