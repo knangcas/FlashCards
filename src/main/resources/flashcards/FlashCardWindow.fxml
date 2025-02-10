@@ -12,39 +12,42 @@
       <Pane id="flashCardPane" fx:id="flashPane" layoutX="31.0" layoutY="15.0" onMouseClicked="#test" prefHeight="608.0" prefWidth="993.0">
          <children>
             <Button fx:id="nextButton" layoutX="858.0" layoutY="560.0" mnemonicParsing="false" onAction="#nextCard" prefHeight="27.0" prefWidth="90.0" text="Next" />
-            <Label fx:id="deckNameLabel" layoutX="21.0" layoutY="14.0" text="DeckName">
+            <Label fx:id="deckNameLabel" layoutX="21.0" layoutY="14.0" styleClass="text" text="DeckName">
                <font>
                   <Font size="54.0" />
                </font>
             </Label>
             <Button fx:id="skipButton" layoutX="753.0" layoutY="560.0" mnemonicParsing="false" onAction="#skipCard" prefHeight="27.0" prefWidth="90.0" text="Skip" />
             <Button fx:id="restartButton" layoutX="639.0" layoutY="560.0" mnemonicParsing="false" onAction="#shuffleAndRestart" text="Shuffle &amp; Restart" />
-            <Label fx:id="progressLabel" layoutX="879.0" layoutY="69.0" prefHeight="17.0" prefWidth="138.0" text="Card X of X" />
-            <Label fx:id="skippedLabel" layoutX="741.0" layoutY="69.0" prefHeight="17.0" prefWidth="138.0" text="Skipped x Cards" />
+            <Label fx:id="progressLabel" layoutX="879.0" layoutY="69.0" prefHeight="17.0" prefWidth="138.0" styleClass="text" text="Card X of X" />
+            <Label fx:id="skippedLabel" layoutX="741.0" layoutY="69.0" prefHeight="17.0" prefWidth="138.0" styleClass="text" text="Skipped x Cards" />
             <Pane layoutX="21.0" layoutY="109.0" prefHeight="438.0" prefWidth="929.0" styleClass="flashCardCard" stylesheets="@styles/styles.css">
                <children>
-                  <Label fx:id="contentLabel" layoutX="45.0" layoutY="174.0" prefHeight="17.0" prefWidth="729.0" text="Question" textAlignment="CENTER" />
+                  <Label fx:id="contentLabel" layoutX="45.0" layoutY="14.0" prefHeight="403.0" prefWidth="870.0" styleClass="text" text="Question">
+                     <font>
+                        <Font size="31.0" />
+                     </font></Label>
                </children>
             </Pane>
-            <Label fx:id="deckSubjectLabel" layoutX="21.0" layoutY="78.0" prefHeight="17.0" prefWidth="253.0" />
+            <Label fx:id="deckSubjectLabel" layoutX="21.0" layoutY="78.0" prefHeight="17.0" prefWidth="253.0" styleClass="text" />
          </children>
       </Pane>
-      <Pane fx:id="selectDeckPane" layoutX="18.0" layoutY="15.0" prefHeight="608.0" prefWidth="1025.0">
+      <Pane fx:id="selectDeckPane" layoutX="18.0" layoutY="15.0" prefHeight="608.0" prefWidth="993.0">
          <children>
-            <Label layoutX="370.0" layoutY="23.0" text="SELECT DECK">
+            <Label layoutX="330.0" layoutY="23.0" prefHeight="57.0" prefWidth="393.0" styleClass="text" text="S E L E C T   D E C K">
                <font>
                   <Font size="46.0" />
                </font>
             </Label>
             <ListView fx:id="deckList" layoutX="339.0" layoutY="105.0" prefHeight="454.0" prefWidth="348.0" />
-            <Label fx:id="quantityDeckLabel" layoutX="486.0" layoutY="80.0" prefHeight="17.0" prefWidth="53.0" text="X Decks" textAlignment="RIGHT" />
-            <Label fx:id="noDecksLabel" layoutX="374.0" layoutY="293.0" prefHeight="66.0" prefWidth="304.0" text="You have no decks. Create one in deck management." />
+            <Label fx:id="quantityDeckLabel" layoutX="486.0" layoutY="80.0" prefHeight="17.0" prefWidth="53.0" styleClass="text" text="X Decks" textAlignment="RIGHT" />
+            <Label fx:id="noDecksLabel" layoutX="374.0" layoutY="293.0" prefHeight="66.0" prefWidth="304.0" styleClass="text" text="You have no decks. Create one in deck management." />
             <Button fx:id="okButton" layoutX="597.0" layoutY="562.0" mnemonicParsing="false" onAction="#selectDeck" prefHeight="27.0" prefWidth="90.0" text="OK" />
          </children>
       </Pane>
       <Pane fx:id="endPane" layoutY="140.0" prefHeight="480.0" prefWidth="1034.0">
          <children>
-            <Label layoutX="344.0" layoutY="114.0" prefHeight="28.0" prefWidth="385.0" text="You have reached the bottom of the deck!">
+            <Label layoutX="344.0" layoutY="114.0" prefHeight="28.0" prefWidth="385.0" styleClass="text" text="You have reached the bottom of the deck!">
                <font>
                   <Font size="22.0" />
                </font>

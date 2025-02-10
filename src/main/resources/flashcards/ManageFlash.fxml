@@ -9,30 +9,30 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="649.0" prefWidth="1056.0" styleClass="mainPane" stylesheets="@styles/styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="flashcards.controller.ManageFlashController">
+<AnchorPane fx:id="manageDeckPane" prefHeight="649.0" prefWidth="989.0" styleClass="mainPane" stylesheets="@styles/styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="flashcards.controller.ManageFlashController">
    <children>
-      <Pane layoutX="24.0" layoutY="14.0" prefHeight="121.0" prefWidth="1015.0">
+      <Pane layoutX="21.0" layoutY="27.0" prefHeight="110.0" prefWidth="960.0">
          <children>
-            <Label layoutX="14.0" layoutY="-21.0" prefHeight="65.0" prefWidth="382.0" text="MANAGE DECK">
+            <Label layoutX="14.0" prefHeight="65.0" prefWidth="503.0" styleClass="text" text="M A N A G E  D E C K">
                <font>
                   <Font size="48.0" />
                </font></Label>
-            <Label fx:id="currentDeckLabel" layoutX="14.0" layoutY="60.0" prefHeight="27.0" prefWidth="493.0" text="Deck Name">
+            <Label fx:id="currentDeckLabel" layoutX="14.0" layoutY="60.0" prefHeight="27.0" prefWidth="493.0" styleClass="text" text="Deck Name">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="currentDeckSubjectLabel" layoutX="14.0" layoutY="82.0" prefHeight="27.0" prefWidth="493.0" text="Deck Subject">
+            <Label fx:id="currentDeckSubjectLabel" layoutX="14.0" layoutY="82.0" prefHeight="27.0" prefWidth="493.0" styleClass="text" text="Deck Subject">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
          </children>
       </Pane>
-      <ListView fx:id="deckList" layoutX="52.0" layoutY="159.0" prefHeight="427.0" prefWidth="280.0" />
+      <ListView fx:id="deckList" layoutX="23.0" layoutY="159.0" prefHeight="427.0" prefWidth="280.0" />
       <Label fx:id="quantityDeckLabel" layoutX="290.0" layoutY="136.0" text="X Decks" />
-      <Button fx:id="removeDeckButton" layoutX="256.0" layoutY="592.0" mnemonicParsing="false" onAction="#removeDeck" prefHeight="25.0" prefWidth="76.0" text="Remove" />
-      <Pane fx:id="cardListPane" layoutX="344.0" layoutY="131.0" prefHeight="511.0" prefWidth="306.0">
+      <Button fx:id="removeDeckButton" layoutX="227.0" layoutY="592.0" mnemonicParsing="false" onAction="#removeDeck" prefHeight="25.0" prefWidth="76.0" text="Remove" />
+      <Pane fx:id="cardListPane" layoutX="313.0" layoutY="128.0" prefHeight="511.0" prefWidth="306.0">
          <children>
             <Label fx:id="quantityCardLabel" layoutX="251.0" layoutY="6.0" text="X Cards" />
             <ListView fx:id="cardList" layoutX="13.0" layoutY="29.0" prefHeight="427.0" prefWidth="280.0" />
@@ -40,30 +40,30 @@
             <Button layoutX="127.0" layoutY="462.0" mnemonicParsing="false" onAction="#addCard" prefHeight="25.0" prefWidth="76.0" text="Add Card" />
          </children>
       </Pane>
-      <Pane fx:id="cardPane" layoutX="650.0" layoutY="131.0" prefHeight="505.0" prefWidth="399.0">
+      <Pane fx:id="cardPane" layoutX="609.0" layoutY="128.0" prefHeight="469.0" prefWidth="382.0">
          <children>
-            <TextArea fx:id="answerTextArea" layoutX="14.0" layoutY="276.0" onKeyReleased="#checkFields" onKeyTyped="#checkFields" prefHeight="182.0" prefWidth="362.0" />
+            <TextArea fx:id="answerTextArea" layoutX="14.0" layoutY="276.0" onKeyReleased="#checkFields" onKeyTyped="#checkFields" prefHeight="182.0" prefWidth="362.0" styleClass="questionArea" />
             <Label fx:id="answerLabel" layoutX="14.0" layoutY="251.0" text="Answer" />
             <Label fx:id="questionLabel" layoutX="14.0" layoutY="28.0" text="Question" />
-            <TextArea fx:id="questionTextArea" layoutX="14.0" layoutY="52.0" onKeyReleased="#checkFields" onKeyTyped="#checkFields" prefHeight="182.0" prefWidth="362.0" />
+            <TextArea fx:id="questionTextArea" layoutX="14.0" layoutY="52.0" onKeyReleased="#checkFields" onKeyTyped="#checkFields" prefHeight="182.0" prefWidth="362.0" styleClass="questionArea" />
             <Button fx:id="saveCardButton" layoutX="300.0" layoutY="15.0" mnemonicParsing="false" onAction="#saveCard" prefHeight="25.0" prefWidth="76.0" text="Save Card" />
          </children>
       </Pane>
-      <Button fx:id="addDeckButton" layoutX="87.0" layoutY="592.0" mnemonicParsing="false" onAction="#addDeck" prefHeight="25.0" prefWidth="76.0" text="Add Deck" />
-      <Button fx:id="editDeckButton" layoutX="171.0" layoutY="592.0" mnemonicParsing="false" onAction="#editDeck" prefHeight="25.0" prefWidth="76.0" text="Edit Deck" />
-      <Pane fx:id="deckDetailsPane" layoutX="345.0" layoutY="131.0" prefHeight="511.0" prefWidth="700.0">
+      <Button fx:id="addDeckButton" layoutX="57.0" layoutY="592.0" mnemonicParsing="false" onAction="#addDeck" prefHeight="25.0" prefWidth="76.0" text="Add Deck" />
+      <Button fx:id="editDeckButton" layoutX="143.0" layoutY="592.0" mnemonicParsing="false" onAction="#editDeck" prefHeight="25.0" prefWidth="76.0" text="Edit Deck" />
+      <Pane fx:id="deckDetailsPane" layoutX="345.0" layoutY="120.0" prefHeight="427.0" prefWidth="631.0">
          <children>
-            <Label fx:id="currentDeckLabel2" layoutX="56.0" layoutY="213.0" prefHeight="27.0" prefWidth="123.0" text="Deck Name">
+            <Label fx:id="currentDeckLabel2" layoutX="56.0" layoutY="213.0" prefHeight="27.0" prefWidth="123.0" styleClass="text" text="Deck Name">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="currentDeckLabel11" layoutX="56.0" layoutY="242.0" prefHeight="27.0" prefWidth="123.0" text="Deck Subject">
+            <Label fx:id="currentDeckLabel11" layoutX="56.0" layoutY="242.0" prefHeight="27.0" prefWidth="123.0" styleClass="text" text="Deck Subject">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="deckMainLabel" layoutX="56.0" layoutY="105.0" prefHeight="65.0" prefWidth="382.0" text="NEW DECK">
+            <Label fx:id="deckMainLabel" layoutX="56.0" layoutY="105.0" prefHeight="65.0" prefWidth="382.0" styleClass="text" text="N E W   D E C K ">
                <font>
                   <Font size="48.0" />
                </font>
@@ -74,9 +74,9 @@
             <Button layoutX="232.0" layoutY="291.0" mnemonicParsing="false" onAction="#cancelDeck" prefHeight="25.0" prefWidth="76.0" text="Cancel" />
          </children>
       </Pane>
-      <Pane fx:id="successPane" layoutX="345.0" layoutY="159.0" prefHeight="469.0" prefWidth="691.0">
+      <Pane fx:id="successPane" layoutX="345.0" layoutY="120.0" prefHeight="469.0" prefWidth="616.0">
          <children>
-            <Label fx:id="successLabel" layoutX="183.0" layoutY="179.0" prefHeight="65.0" prefWidth="382.0" text="SUCCESS">
+            <Label fx:id="successLabel" layoutX="183.0" layoutY="179.0" prefHeight="65.0" prefWidth="382.0" styleClass="text" text="SUCCESS">
                <font>
                   <Font size="48.0" />
                </font>

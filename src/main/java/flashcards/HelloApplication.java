@@ -17,6 +17,7 @@ public class HelloApplication extends Application {
         Scene scene = new Scene(fxmlLoader.load());
         UserManagement.loadUsers();
         stage.setTitle("FLASHCARDS");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();

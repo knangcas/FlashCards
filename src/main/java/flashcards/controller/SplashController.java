@@ -73,6 +73,7 @@ public class SplashController {
         mpc.initialize(UserManagement.getActiveUser());
         stage = new Stage();
         stage.setTitle("FlashCards");
+        stage.setResizable(false);
         stage.setScene(new Scene(root));
         stage.show();
 
