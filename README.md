@@ -1,6 +1,10 @@
 FlashCard application. Currently in progress.
 Personal project to get familiar with working with a few technologies. 
 
+
+![Screenshot1](https://github.com/knangcas/FlashCards/blob/main/Screenshots/ss1.png?raw=true)
+
+
 Supports multiple users.
 Each user can create decks.
 Each deck can contain a (currently unlimited) number of cards.
