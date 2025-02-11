@@ -17,7 +17,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainPageController {
@@ -49,6 +48,12 @@ public class MainPageController {
             user.addDeck(deckID, deckService.getDeck(deckID));
         }
 
+        //this makes it so that it opens up the study page right away, temporary until home page is made.
+        try {
+            studyButton(null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -76,7 +81,7 @@ public class MainPageController {
 
     }
 
-    public void testButton(ActionEvent actionEvent) throws IOException, SQLException {
+    public void studyButton(ActionEvent actionEvent) throws IOException, SQLException {
         //AnchorPane loader = FXMLLoader.load(HelloApplication.class.getResource("FlashCardWindow.fxml"));
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("FlashCardWindow.fxml"));
         AnchorPane l = fxmlLoader.load();

@@ -20,7 +20,7 @@
             </Label>
             <Button id="logout-button" fx:id="logOutButton" layoutX="890.0" layoutY="35.0" mnemonicParsing="false" onAction="#logOut" prefHeight="27.0" prefWidth="91.0" text="Log Out" textFill="#d7d7d7" />
             <Button layoutX="782.0" layoutY="35.0" mnemonicParsing="false" onAction="#manageDecks" prefHeight="27.0" prefWidth="94.0" text="Manage Decks" textFill="#d7d7d7" />
-            <Button layoutX="675.0" layoutY="35.0" mnemonicParsing="false" onAction="#testButton" prefHeight="27.0" prefWidth="94.0" text="Study Cards" textFill="#d7d7d7" />
+            <Button layoutX="675.0" layoutY="35.0" mnemonicParsing="false" onAction="#studyButton" prefHeight="27.0" prefWidth="94.0" text="Study Cards" textFill="#d7d7d7" />
             <Label layoutX="5.0" layoutY="8.0" prefHeight="64.0" prefWidth="537.0" styleClass="text" text="F L A S H C A R D S">
                <font>
                   <Font size="56.0" />
