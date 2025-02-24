@@ -9,8 +9,8 @@
   "deckID" : 1,
   "cardID" : 2
 }, {
-  "question" : "What is a BST",
-  "answer" : "Binary Search Tree",
+  "question" : "new",
+  "answer" : "card",
   "deckID" : 1,
   "cardID" : 3
 } ]

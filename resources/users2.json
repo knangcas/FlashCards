@@ -4,10 +4,4 @@
 }, {
   "username" : "admin2",
   "password" : "123"
-}, {
-  "username" : "Offline User",
-  "password" : "offline"
-}
-
-
-]
+} ]

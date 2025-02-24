@@ -1,6 +1,7 @@
 package flashcards.controller;
 
 import flashcards.HelloApplication;
+import flashcards.Services.impl.JsonLoadSave;
 import flashcards.UserManagement;
 import flashcards.model.exception.FlashcardsConnectionException;
 import javafx.event.ActionEvent;
@@ -41,36 +42,48 @@ public class SplashController {
 
     Parent root;
 
-    @FXML
-    public void logIn() throws SQLException {
-        try {
-            if (UserManagement.validateUser(usernameField.getText(), passwordField.getText())) {
-                //switch scene, log in to app
-                System.out.println("Logged in");
-                try {
-                    switchToMain();
+    private boolean offline = false;
 
-                } catch (IOException exception) {
-                    System.out.println("Error occured, no such window exists");
+    @FXML
+    public void logIn() throws SQLException, IOException {
+        if (!offline) {
+            try {
+                if (UserManagement.validateUser(usernameField.getText(), passwordField.getText())) {
+                    //switch scene, log in to app
+                    System.out.println("Logged in");
+                    try {
+                        switchToMain();
+
+                    } catch (IOException exception) {
+                        System.out.println("Error occured, no such window exists");
+                    }
+                } else {
+                    //show red text below login indicating incorrect password
+                    invalidCredentials.setText("Invalid Credentials");
+                    System.out.println("Failed");
                 }
-            } else {
-                //show red text below login indicating incorrect password
-                invalidCredentials.setText("Invalid Credentials");
-                System.out.println("Failed");
+            } catch (FlashcardsConnectionException e) {
+                invalidCredentials.setText("Unable to connect.");
             }
-        } catch (FlashcardsConnectionException e) {
-            invalidCredentials.setText("Unable to connect.");
+        } else {
+            JsonLoadSave.initialize();
+            switchToMain();
         }
 
     }
 
     private void switchToMain() throws IOException, SQLException {
+
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("MainPage.fxml"));
         root = fxmlLoader.load();
 
         MainPageController mpc = fxmlLoader.getController();
         //mpc.setWelcomeText(usernameField.getText());
-        mpc.initialize(UserManagement.getActiveUser());
+        if (!offline) {
+            mpc.initialize(UserManagement.getActiveUser());
+        } else {
+            mpc.initialize();
+        }
         stage = new Stage();
         stage.setTitle("FlashCards");
         stage.setResizable(false);
@@ -90,6 +103,10 @@ public class SplashController {
         stage.close();
     }
 
-    public void offlineMode(ActionEvent actionEvent) {
+    public void offlineMode(ActionEvent actionEvent) throws SQLException, IOException {
+        usernameField.setText("Offline User");
+        passwordField.setText("offline");
+        offline = true;
+        logIn();
     }
 }

@@ -1,8 +1,6 @@
 package flashcards.Services.impl;
 
-import flashcards.model.FlashCard;
-import flashcards.model.FlashCardDeck;
-import flashcards.model.User;
+import flashcards.model.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,6 +15,8 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 public class JsonLoadSave {
 
+    public static boolean INITIALIZED = false;
+
     public static void initialize() {
         users = new HashMap<>();
         decks = new HashMap<>();
@@ -27,6 +27,7 @@ public class JsonLoadSave {
         loadFlashCardDecks();
         loadCards();
         loadDecksToUser();
+        INITIALIZED = true;
     }
 
     public static HashMap<String, User> users;
@@ -121,9 +122,13 @@ public class JsonLoadSave {
     public static void saveUsers() {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+        List<UserShell> save = new ArrayList<>();
+        for (User u: userList) {
+            save.add(new UserShell(u.getUsername(), u.getPassword()));
+        }
 
         try {
-            objectMapper.writeValue(new File("resources/users.json"), userList);
+            objectMapper.writeValue(new File("resources/users.json"), save);
         } catch (IOException e) {
             e.printStackTrace();
             //todo handle  better
@@ -133,9 +138,12 @@ public class JsonLoadSave {
     public static void saveFlashCards() {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-
+        List<FlashCardShell> save = new ArrayList<>();
+        for (FlashCard fc : cardList) {
+            save.add(new FlashCardShell(fc.getQuestion(), fc.getAnswer(), fc.getDeckID(), fc.getCardID()));
+        }
         try {
-            objectMapper.writeValue(new File("resources/cards.json"), cardList);
+            objectMapper.writeValue(new File("resources/cards.json"), save);
         } catch (IOException e) {
             e.printStackTrace();
             //todo handle better
@@ -145,9 +153,12 @@ public class JsonLoadSave {
     public static void saveDecks() {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-
+        List<FlashCardDeckShell> save = new ArrayList<>();
+        for(FlashCardDeck fcd: deckList) {
+            save.add(new FlashCardDeckShell(fcd.getName(), fcd.getSubject(), fcd.getUsername(), fcd.getDeckID()));
+        }
         try {
-            objectMapper.writeValue(new File("resources/decks.json"), deckList);
+            objectMapper.writeValue(new File("resources/decks.json"), save);
         } catch (IOException e) {
             e.printStackTrace();
             //todo handle

@@ -35,6 +35,12 @@ public class UserManagement {
         return activeUser;
     }
 
+    public static void offlineUser() throws SQLException {
+        UserService userService = UserService.getInstance("JSON");
+        assert userService != null;
+        activeUser = userService.getUser("Offline User");
+    }
+
     public static boolean validateUser(String username, String password) throws SQLException {
 
         //TODO salt passwords

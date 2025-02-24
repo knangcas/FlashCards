@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="manageDeckPane" prefHeight="649.0" prefWidth="989.0" styleClass="mainPane" stylesheets="@styles/styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="flashcards.controller.ManageFlashController">
+<AnchorPane fx:id="manageDeckPane" prefHeight="649.0" prefWidth="989.0" styleClass="mainPane" stylesheets="@styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="flashcards.controller.ManageFlashController">
    <children>
       <Pane layoutX="21.0" layoutY="27.0" prefHeight="110.0" prefWidth="960.0">
          <children>
@@ -30,11 +30,11 @@
          </children>
       </Pane>
       <ListView fx:id="deckList" layoutX="23.0" layoutY="159.0" prefHeight="427.0" prefWidth="280.0" />
-      <Label fx:id="quantityDeckLabel" layoutX="290.0" layoutY="136.0" text="X Decks" />
+      <Label fx:id="quantityDeckLabel" layoutX="261.0" layoutY="137.0" styleClass="text" text="X Decks" />
       <Button fx:id="removeDeckButton" layoutX="227.0" layoutY="592.0" mnemonicParsing="false" onAction="#removeDeck" prefHeight="25.0" prefWidth="76.0" text="Remove" />
       <Pane fx:id="cardListPane" layoutX="313.0" layoutY="128.0" prefHeight="511.0" prefWidth="306.0">
          <children>
-            <Label fx:id="quantityCardLabel" layoutX="251.0" layoutY="6.0" text="X Cards" />
+            <Label fx:id="quantityCardLabel" layoutX="251.0" layoutY="6.0" styleClass="text" text="X Cards" />
             <ListView fx:id="cardList" layoutX="13.0" layoutY="29.0" prefHeight="427.0" prefWidth="280.0" />
             <Button fx:id="removeCardButton" layoutX="213.0" layoutY="462.0" mnemonicParsing="false" onAction="#removeCard" prefHeight="25.0" prefWidth="76.0" text="Remove" />
             <Button layoutX="127.0" layoutY="462.0" mnemonicParsing="false" onAction="#addCard" prefHeight="25.0" prefWidth="76.0" text="Add Card" />
@@ -43,8 +43,8 @@
       <Pane fx:id="cardPane" layoutX="609.0" layoutY="128.0" prefHeight="469.0" prefWidth="382.0">
          <children>
             <TextArea fx:id="answerTextArea" layoutX="14.0" layoutY="276.0" onKeyReleased="#checkFields" onKeyTyped="#checkFields" prefHeight="182.0" prefWidth="362.0" styleClass="questionArea" />
-            <Label fx:id="answerLabel" layoutX="14.0" layoutY="251.0" text="Answer" />
-            <Label fx:id="questionLabel" layoutX="14.0" layoutY="28.0" text="Question" />
+            <Label fx:id="answerLabel" layoutX="14.0" layoutY="251.0" styleClass="text" text="Answer" />
+            <Label fx:id="questionLabel" layoutX="14.0" layoutY="28.0" styleClass="text" text="Question" />
             <TextArea fx:id="questionTextArea" layoutX="14.0" layoutY="52.0" onKeyReleased="#checkFields" onKeyTyped="#checkFields" prefHeight="182.0" prefWidth="362.0" styleClass="questionArea" />
             <Button fx:id="saveCardButton" layoutX="300.0" layoutY="15.0" mnemonicParsing="false" onAction="#saveCard" prefHeight="25.0" prefWidth="76.0" text="Save Card" />
          </children>

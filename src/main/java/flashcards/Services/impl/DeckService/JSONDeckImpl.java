@@ -82,6 +82,8 @@ public class JSONDeckImpl implements DeckService {
 
     @Override
     public boolean addCard(FlashCard card) throws SQLException {
+        int id = JsonLoadSave.cardList.size() + 1;
+        card.setCardID(id);
         JsonLoadSave.cardList.add(card);
 
         JsonLoadSave.repopulateObjects();

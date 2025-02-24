@@ -2,6 +2,7 @@ package flashcards.controller;
 
 import flashcards.MainWrapper;
 import flashcards.Services.DeckService;
+import flashcards.Services.impl.JsonLoadSave;
 import flashcards.model.FlashCard;
 import flashcards.model.FlashCardDeck;
 import flashcards.model.User;
@@ -113,7 +114,11 @@ public class ManageFlashController {
 
 
     public void initialize(User user) throws SQLException {
-        deckService = DeckService.getInstance(MainWrapper.SERVICE);
+        if (JsonLoadSave.INITIALIZED) {
+            deckService = DeckService.getInstance("JSON");
+        } else {
+            deckService = DeckService.getInstance(MainWrapper.SERVICE);
+        }
         loggedInUser = user;
         userPopulateDeck();
         populateDeckList();
