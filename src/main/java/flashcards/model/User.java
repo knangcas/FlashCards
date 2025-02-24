@@ -16,6 +16,9 @@ public class User {
 
     private HashMap<Integer, FlashCardDeck> decks;
 
+    public User(){
+        decks = new HashMap<>();
+    }
     public User(String username, String password) {
         this.username = username;
         this.password = password;

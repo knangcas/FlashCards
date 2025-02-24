@@ -5,6 +5,7 @@ import flashcards.Services.DeckService;
 import flashcards.UserManagement;
 import flashcards.model.FlashCard;
 import flashcards.model.FlashCardDeck;
+import flashcards.model.exception.FlashCardDeckEmptyException;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
@@ -32,6 +33,9 @@ public class FlashCardWindowController {
     public Button skipButton;
     @FXML
     public Button restartButton;
+    @FXML
+    public Pane noCardsPane;
+
     @FXML
     private Label progressLabel;
 
@@ -93,14 +97,18 @@ public class FlashCardWindowController {
     DeckService deckService;
 
 
-    public void initializeDeck(FlashCardDeck deck2) throws SQLException {
+    public void initializeDeck(boolean offline) throws SQLException {
         //this.deck = deck;
         selectDeckPane.setVisible(true);
         flashPane.setVisible(false);
         endPane.setVisible(false);
         noDecksLabel.setVisible(false);
-
-        deckService = DeckService.getInstance(MainWrapper.SERVICE);
+        noCardsPane.setVisible(false);
+        if (!offline) {
+            deckService = DeckService.getInstance(MainWrapper.SERVICE);
+        } else {
+            deckService = DeckService.getInstance("JSON");
+        }
         deckMap = UserManagement.getActiveUser().getDecks();
         deckIdMap = new HashMap<>();
 
@@ -242,6 +250,9 @@ public class FlashCardWindowController {
 
         try {
             deck = deckService.getDeck(deckIdMap.get(deckList.getSelectionModel().getSelectedItem()));
+            if (deck.isEmpty()) {
+                throw new FlashCardDeckEmptyException();
+            }
             deckNameLabel.setText(deck.getName());
             contentLabel.setText(deck.getCard().getQuestion());
             currentCard = deck.getCard();
@@ -253,13 +264,17 @@ public class FlashCardWindowController {
             if (deck.getSubject() != null) {
                 deckSubjectLabel.setText(deck.getSubject());
             }
+            selectDeckPane.setVisible(false);
+            flashPane.setVisible(true);
         }
         catch (SQLException e) {
             e.printStackTrace();
+        } catch (FlashCardDeckEmptyException fce) {
+            selectDeckPane.setVisible(false);
+            noCardsPane.setVisible(true);
         }
 
-        selectDeckPane.setVisible(false);
-        flashPane.setVisible(true);
+
 
     }
 
@@ -280,5 +295,12 @@ public class FlashCardWindowController {
         currentCard = deck.getCard();
         endPane.setVisible(false);
         flashPane.setVisible(true);
+    }
+
+
+
+    public void noCardsBack(ActionEvent actionEvent) {
+        selectDeckPane.setVisible(true);
+        noCardsPane.setVisible(false);
     }
 }

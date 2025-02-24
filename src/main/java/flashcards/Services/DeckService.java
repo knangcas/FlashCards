@@ -1,5 +1,6 @@
 package flashcards.Services;
 
+import flashcards.Services.impl.DeckService.JSONDeckImpl;
 import flashcards.Services.impl.DeckService.SQLDeckImpl;
 import flashcards.model.FlashCard;
 import flashcards.model.FlashCardDeck;
@@ -13,6 +14,9 @@ public interface DeckService {
     public static DeckService getInstance(String service) {
         if (service.equals("SQL")) {
             return new SQLDeckImpl();
+        }
+        if (service.equals("JSON")) {
+            return new JSONDeckImpl();
         }
         return null;
     }

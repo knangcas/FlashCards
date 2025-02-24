@@ -2,6 +2,7 @@ package flashcards.controller;
 
 import flashcards.MainWrapper;
 import flashcards.Services.DeckService;
+import flashcards.Services.impl.JsonLoadSave;
 import flashcards.model.FlashCard;
 import flashcards.model.FlashCardDeck;
 import flashcards.model.User;
@@ -113,7 +114,11 @@ public class ManageFlashController {
 
 
     public void initialize(User user) throws SQLException {
-        deckService = DeckService.getInstance(MainWrapper.SERVICE);
+        if (JsonLoadSave.INITIALIZED) {
+            deckService = DeckService.getInstance("JSON");
+        } else {
+            deckService = DeckService.getInstance(MainWrapper.SERVICE);
+        }
         loggedInUser = user;
         userPopulateDeck();
         populateDeckList();
@@ -462,6 +467,7 @@ public class ManageFlashController {
     private void successLabelChange(String s) {
         successLabel.setText(s);
         deckDetailsPane.setVisible(false);
+        deckList.setDisable(true);
         cardPane.setVisible(false);
         cardListPane.setVisible(false);
         successPane.setVisible(true);
@@ -478,6 +484,7 @@ public class ManageFlashController {
 
     public void successOK(ActionEvent actionEvent) {
         successPane.setVisible(false);
+        deckList.setDisable(false);
         if (successLabel.getText().equals("Card Added!") || successLabel.getText().equals("Card Saved!")) {
             successOK2();
         }
@@ -486,6 +493,7 @@ public class ManageFlashController {
 
     private void successOK2() {
         successPane.setVisible(false);
+        deckList.setDisable(false);
         cardListPane.setVisible(true);
         cardPane.setVisible(false);
         cardList.getSelectionModel().clearSelection();

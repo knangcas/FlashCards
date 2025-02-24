@@ -1,5 +1,6 @@
 package flashcards;
 
+import flashcards.Services.impl.JsonLoadSave;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,7 +16,9 @@ public class HelloApplication extends Application {
 
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("splash.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        UserManagement.loadUsers();
+        if (MainWrapper.SERVICE.equals("JSON")) {
+            JsonLoadSave.initialize();
+        }
         stage.setTitle("FLASHCARDS");
         stage.setResizable(false);
         stage.setScene(scene);

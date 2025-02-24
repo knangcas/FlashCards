@@ -1,5 +1,6 @@
 package flashcards.Services;
 
+import flashcards.Services.impl.UserService.JSONUserImpl;
 import flashcards.Services.impl.UserService.SQLUserImpl;
 import flashcards.model.User;
 
@@ -12,6 +13,9 @@ public interface UserService {
     public static UserService getInstance(String service) throws SQLException {
         if (service.equals("SQL")) {
             return new SQLUserImpl();
+        }
+        if (service.equals("JSON")) {
+            return new JSONUserImpl();
         }
         return null;
     }

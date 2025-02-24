@@ -3,6 +3,8 @@ package flashcards.controller;
 import flashcards.HelloApplication;
 import flashcards.MainWrapper;
 import flashcards.Services.DeckService;
+import flashcards.Services.impl.JsonLoadSave;
+import flashcards.UserManagement;
 import flashcards.model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -31,6 +33,8 @@ public class MainPageController {
 
     private User loggedInUser;
 
+    private boolean offline = false;
+
 
 
 
@@ -39,6 +43,9 @@ public class MainPageController {
     }
 
     public void initialize(User user) throws SQLException {
+        offline = false;
+        System.out.println("inInitialize1");
+        JsonLoadSave.INITIALIZED = false;
         DeckService deckService = DeckService.getInstance(MainWrapper.SERVICE);
         loggedInUser = user;
         welcomeText.setText("Welcome, " + loggedInUser.getUsername() + "!");
@@ -46,6 +53,27 @@ public class MainPageController {
 
         for (int deckID : decks) {
             user.addDeck(deckID, deckService.getDeck(deckID));
+        }
+
+        //this makes it so that it opens up the study page right away, temporary until home page is made.
+        try {
+            studyButton(null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void initialize2() throws SQLException {
+        offline = true;
+        System.out.println("inInitialize2");
+        DeckService deckService = DeckService.getInstance("JSON");
+        loggedInUser = new User("Offline User", "offline");
+        welcomeText.setText("Welcome!");
+        List<Integer> decks = deckService.getDecks(loggedInUser);
+        UserManagement.offlineUser();
+        for (int deckID : decks) {
+            loggedInUser.addDeck(deckID, deckService.getDeck(deckID));
         }
 
         //this makes it so that it opens up the study page right away, temporary until home page is made.
@@ -86,7 +114,11 @@ public class MainPageController {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("FlashCardWindow.fxml"));
         AnchorPane l = fxmlLoader.load();
         FlashCardWindowController flashCardWindowController = fxmlLoader.getController();
-        flashCardWindowController.initializeDeck(null);
+        if (!offline) {
+            flashCardWindowController.initializeDeck(false);
+        } else {
+            flashCardWindowController.initializeDeck(true);
+        }
         borderPane.setCenter(l);
 
 

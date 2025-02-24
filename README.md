@@ -1,7 +1,17 @@
 # FlashCard application.
 ## Currently in progress.
+
+### Last Updated
+
+Updated February 24th, 2025
+- Added "offline mode" which is based on JSON implementation.
+- Single user supported for offline mode. "Signing in" will still query MySQL database.
+- Fixed an issue where a selecting a deck with 0 cards would cause an error.
+
 ### About
 Personal JavaFX project to get familiar with working with a few technologies.
+
+
 
 - Supports multiple users.
 
@@ -41,7 +51,9 @@ Personal JavaFX project to get familiar with working with a few technologies.
 
 ![Screenshot5](https://github.com/knangcas/FlashCards/blob/main/Screenshots/ss5.png?raw=true)
 
+![Screenshot6](https://github.com/knangcas/FlashCards/blob/main/Screenshots/ss6.png?raw=true)
 
+![Screenshot7](https://github.com/knangcas/FlashCards/blob/main/Screenshots/ss7.png?raw=true)
 
 
 

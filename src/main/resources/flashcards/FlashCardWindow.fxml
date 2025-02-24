@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="fcMainPane" prefHeight="649.0" prefWidth="959.0" stylesheets="@styles/styles.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="flashcards.controller.FlashCardWindowController">
+<AnchorPane fx:id="fcMainPane" prefHeight="649.0" prefWidth="959.0" stylesheets="@styles/styles.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="flashcards.controller.FlashCardWindowController">
    <children>
       <Pane id="flashCardPane" fx:id="flashPane" layoutX="9.0" layoutY="21.0" onMouseClicked="#test" prefHeight="593.0" prefWidth="968.0">
          <children>
@@ -34,7 +34,7 @@
       </Pane>
       <Pane fx:id="selectDeckPane" layoutX="17.0" layoutY="15.0" prefHeight="608.0" prefWidth="954.0">
          <children>
-            <Label layoutX="281.0" layoutY="26.0" prefHeight="57.0" prefWidth="393.0" styleClass="text" text="S E L E C T   D E C K">
+            <Label layoutX="259.0" layoutY="26.0" prefHeight="68.0" prefWidth="417.0" styleClass="text" text="S E L E C T   D E C K">
                <font>
                   <Font size="46.0" />
                </font>
@@ -47,7 +47,7 @@
       </Pane>
       <Pane fx:id="endPane" layoutX="19.0" layoutY="118.0" prefHeight="502.0" prefWidth="947.0">
          <children>
-            <Label layoutX="266.0" layoutY="108.0" prefHeight="28.0" prefWidth="385.0" styleClass="text" text="You have reached the bottom of the deck!">
+            <Label layoutX="266.0" layoutY="108.0" prefHeight="32.0" prefWidth="417.0" styleClass="text" text="You have reached the bottom of the deck!">
                <font>
                   <Font size="22.0" />
                </font>
@@ -55,6 +55,12 @@
             <Button layoutX="395.0" layoutY="150.0" mnemonicParsing="false" onAction="#shuffleAndRestart" prefHeight="27.0" prefWidth="126.0" text="Shuffle &amp; Restart" />
             <Button fx:id="skippedCardsButton" layoutX="396.0" layoutY="221.0" mnemonicParsing="false" onAction="#loadSkippedCards" prefHeight="27.0" prefWidth="126.0" text="Load Skipped Cards" />
             <Button layoutX="395.0" layoutY="186.0" mnemonicParsing="false" onAction="#selectNewDeck" prefHeight="27.0" prefWidth="126.0" text="Select New Deck" />
+         </children>
+      </Pane>
+      <Pane fx:id="noCardsPane" layoutY="116.0" prefHeight="533.0" prefWidth="993.0">
+         <children>
+            <Label layoutX="316.0" layoutY="195.0" prefHeight="32.0" prefWidth="426.0" styleClass="text" text="Selected deck contains 0 cards. Add cards in deck management." textAlignment="CENTER" />
+            <Button fx:id="noCardsBackButton" layoutX="425.0" layoutY="227.0" mnemonicParsing="false" onAction="#noCardsBack" prefHeight="21.0" prefWidth="104.0" text="Back To Decks" />
          </children>
       </Pane>
    </children>

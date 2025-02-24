@@ -1,0 +1,16 @@
+[ {
+  "question" : "What is 1+1",
+  "answer" : "2",
+  "deckID" : 1,
+  "cardID" : 1
+}, {
+  "question" : "What is 2+2",
+  "answer" : "4",
+  "deckID" : 1,
+  "cardID" : 2
+}, {
+  "question" : "What is a BST",
+  "answer" : "Binary Search Tree",
+  "deckID" : 1,
+  "cardID" : 3
+} ]
