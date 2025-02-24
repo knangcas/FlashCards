@@ -55,6 +55,7 @@ public class SplashController {
                         switchToMain();
 
                     } catch (IOException exception) {
+                        exception.printStackTrace();
                         System.out.println("Error occured, no such window exists");
                     }
                 } else {
@@ -80,9 +81,11 @@ public class SplashController {
         MainPageController mpc = fxmlLoader.getController();
         //mpc.setWelcomeText(usernameField.getText());
         if (!offline) {
+            System.out.println("lol");
             mpc.initialize(UserManagement.getActiveUser());
         } else {
-            mpc.initialize();
+            System.out.println("lmao");
+            mpc.initialize2();
         }
         stage = new Stage();
         stage.setTitle("FlashCards");

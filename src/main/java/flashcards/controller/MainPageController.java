@@ -3,6 +3,7 @@ package flashcards.controller;
 import flashcards.HelloApplication;
 import flashcards.MainWrapper;
 import flashcards.Services.DeckService;
+import flashcards.Services.impl.JsonLoadSave;
 import flashcards.UserManagement;
 import flashcards.model.User;
 import javafx.event.ActionEvent;
@@ -42,6 +43,9 @@ public class MainPageController {
     }
 
     public void initialize(User user) throws SQLException {
+        offline = false;
+        System.out.println("inInitialize1");
+        JsonLoadSave.INITIALIZED = false;
         DeckService deckService = DeckService.getInstance(MainWrapper.SERVICE);
         loggedInUser = user;
         welcomeText.setText("Welcome, " + loggedInUser.getUsername() + "!");
@@ -60,8 +64,9 @@ public class MainPageController {
 
     }
 
-    public void initialize() throws SQLException {
+    public void initialize2() throws SQLException {
         offline = true;
+        System.out.println("inInitialize2");
         DeckService deckService = DeckService.getInstance("JSON");
         loggedInUser = new User("Offline User", "offline");
         welcomeText.setText("Welcome!");
