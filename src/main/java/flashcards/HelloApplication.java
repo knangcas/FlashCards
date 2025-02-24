@@ -15,7 +15,7 @@ public class HelloApplication extends Application {
 
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("splash.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        UserManagement.loadUsers();
+        UserManagement.loadUsers(); //for json impl
         stage.setTitle("FLASHCARDS");
         stage.setResizable(false);
         stage.setScene(scene);

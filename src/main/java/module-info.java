@@ -4,7 +4,9 @@ module flashcards {
 
     requires org.kordamp.bootstrapfx.core;
     requires java.sql;
-
+    exports flashcards.model;
+    requires com.fasterxml.jackson.databind;
+    opens flashcards.model to com.fasterxml.jackson.databind;
     opens flashcards to javafx.fxml;
     exports flashcards;
     exports flashcards.controller;

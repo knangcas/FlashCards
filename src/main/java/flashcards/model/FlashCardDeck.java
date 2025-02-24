@@ -110,6 +110,9 @@ public class FlashCardDeck{
 
     }
 
+
+    public FlashCardDeck(){}
+
     public FlashCardDeck(String name) {
         this.name = name;
 

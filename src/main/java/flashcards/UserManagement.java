@@ -1,11 +1,13 @@
 package flashcards;
 
 import flashcards.Services.UserService;
+import flashcards.Services.impl.JsonLoadSave;
 import flashcards.model.User;
 import flashcards.model.exception.FlashcardsConnectionException;
 
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 
 public class UserManagement {
 
@@ -19,6 +21,12 @@ public class UserManagement {
         //temporary until DB implementation
         User user1 = new User("admin", "password");
         User user2 = new User("admin2", "password2");
+
+        List<User> users = JsonLoadSave.loadUsers();
+
+        for (User u: users) {
+            userMap.put(u.getUsername(), u.getPassword());
+        }
 
         userMap.put(user1.getUsername(), user1.getPassword());
         userMap.put(user2.getUsername(), user2.getPassword());
