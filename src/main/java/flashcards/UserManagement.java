@@ -22,11 +22,9 @@ public class UserManagement {
         User user1 = new User("admin", "password");
         User user2 = new User("admin2", "password2");
 
-        List<User> users = JsonLoadSave.loadUsers();
 
-        for (User u: users) {
-            userMap.put(u.getUsername(), u.getPassword());
-        }
+
+
 
         userMap.put(user1.getUsername(), user1.getPassword());
         userMap.put(user2.getUsername(), user2.getPassword());

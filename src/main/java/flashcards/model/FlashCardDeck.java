@@ -111,7 +111,21 @@ public class FlashCardDeck{
     }
 
 
-    public FlashCardDeck(){}
+    public FlashCardDeck(){
+        deck = new Stack<>();
+
+        shuffle1 = new Stack<>();
+
+        shuffle2 = new Stack<>();
+
+        correct = new Stack<>();
+
+        incorrect = new Stack<>();
+
+        skipped = new Stack<>();
+
+        cards = new ArrayList<>();
+    }
 
     public String username;
 

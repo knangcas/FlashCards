@@ -8,7 +8,7 @@ public class MainWrapper {
     final public static String SERVICE = "SQL";
     public static void main(String[] args) throws SQLException {
 
-        JsonLoadSave.loadFlashCardDecks();
-        //HelloApplication.main(args);
+
+        HelloApplication.main(args);
     }
 }

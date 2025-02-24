@@ -13,7 +13,7 @@ public class JSONimpl implements UserService {
 
     @Override
     public List<User> getUsers() {
-        return JsonLoadSave.loadUsers();
+        return null;
     }
 
     @Override

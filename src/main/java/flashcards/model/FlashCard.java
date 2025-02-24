@@ -35,6 +35,9 @@ public class FlashCard {
 
     private boolean questionSide;
 
+    public FlashCard(){
+        this.questionSide = true;
+    }
     public FlashCard(String question, String answer) {
         this.question = question;
         this.answer = answer;

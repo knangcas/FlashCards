@@ -1,12 +1,16 @@
 package flashcards.Services.impl;
 
+import flashcards.model.FlashCard;
 import flashcards.model.FlashCardDeck;
 import flashcards.model.User;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -14,47 +18,85 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 public class JsonLoadSave {
 
     public static void initialize() {
-        users = loadUsers();
+        users = new HashMap<>();
+        decks = new HashMap<>();
+        loadUsers();
+        loadFlashCardDecks();
+        loadCards();
+        loadDecksToUser();
+
     }
 
-    public static List<User> users;
-    public static List<User> loadUsers() {
+    public static HashMap<String, User> users;
+    public static HashMap<Integer, FlashCardDeck> decks;
+    private static void loadUsers() {
         File file;
         ObjectMapper mapper = new ObjectMapper();
-        ArrayList<User> rList = new ArrayList<>();
+
+        List<User> userList;
         try {
             file = new File("resources/users.json");
-            List<User> userList;
+
             userList = mapper.readValue(file, new TypeReference<>() {});
-            rList.addAll(userList);
+            for(User u: userList) {
+                users.put(u.getUsername(), u);
+            }
         } catch (IOException e) {
             e.printStackTrace();
             //todo handle better
         }
-        for(User u: rList) {
-            System.out.println(u.getUsername() + " " + u.getPassword());
-        }
-        return rList;
+
+
+
+
 
     }
 
-    public static List<FlashCardDeck> loadFlashCardDecks() {
+    private static void loadFlashCardDecks() {
         File file;
         ObjectMapper mapper = new ObjectMapper();
-        ArrayList<FlashCardDeck> rList = new ArrayList<>();
+
+        List<FlashCardDeck> deckList;
         try {
             file = new File("resources/decks.json");
-            List<FlashCardDeck> deckList;
             deckList = mapper.readValue(file, new TypeReference<>() {});
-            rList.addAll(deckList);
+            for (FlashCardDeck fcd : deckList) {
+                decks.put(fcd.getDeckID(), fcd);
+            }
         } catch (IOException e) {
             e.printStackTrace();
             //todo handle better
         }
-        for(FlashCardDeck fcd: rList) {
-            System.out.println(fcd.getName() + " " + fcd.getDeckID());
+
+
+    }
+
+    private static void loadCards() {
+        File file;
+        ObjectMapper mapper = new ObjectMapper();
+        ArrayList<FlashCard> rList = new ArrayList<>();
+        List<FlashCard> cardList;
+        try {
+            file = new File("resources/cards.json");
+
+            cardList = mapper.readValue(file, new TypeReference<>() {});
+            for (FlashCard card : cardList) {
+                decks.get(card.getDeckID()).addFlashCard(card);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            //todo handle better
         }
-        return rList;
+
+
+
+
+    }
+
+    private static void loadDecksToUser(){
+        for (Map.Entry<Integer, FlashCardDeck> deck : decks.entrySet()) {
+            users.get(deck.getValue().getUsername()).addDeck(deck.getKey(), deck.getValue());
+        }
     }
 
 
