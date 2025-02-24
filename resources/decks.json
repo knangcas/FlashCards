@@ -1,13 +1,13 @@
 [
   {
     "deckID" : 1,
-    "deckName": "FirstDeck",
+    "name": "FirstDeck",
     "username": "admin",
     "subject" : null
   },
   {
     "deckID": 2,
-    "deckName": "SecondDeck",
+    "name": "SecondDeck",
     "username": "admin",
     "subject": "a subject"
   }
