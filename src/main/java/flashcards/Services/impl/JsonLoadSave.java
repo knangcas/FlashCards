@@ -20,6 +20,9 @@ public class JsonLoadSave {
     public static void initialize() {
         users = new HashMap<>();
         decks = new HashMap<>();
+        cardList = new ArrayList<>();
+        userList = new ArrayList<>();
+        deckList = new ArrayList<>();
         loadUsers();
         loadFlashCardDecks();
         loadCards();
@@ -37,12 +40,12 @@ public class JsonLoadSave {
         File file;
         ObjectMapper mapper = new ObjectMapper();
 
-        List<User> userList;
+        List<User> uList;
         try {
             file = new File("resources/users.json");
 
-            userList = mapper.readValue(file, new TypeReference<>() {});
-            for(User u: userList) {
+            uList = mapper.readValue(file, new TypeReference<>() {});
+            for(User u: uList) {
                 users.put(u.getUsername(), u);
                 userList.add((u));
             }
@@ -61,11 +64,11 @@ public class JsonLoadSave {
         File file;
         ObjectMapper mapper = new ObjectMapper();
 
-        List<FlashCardDeck> deckList;
+        List<FlashCardDeck> dList;
         try {
             file = new File("resources/decks.json");
-            deckList = mapper.readValue(file, new TypeReference<>() {});
-            for (FlashCardDeck fcd : deckList) {
+            dList = mapper.readValue(file, new TypeReference<>() {});
+            for (FlashCardDeck fcd : dList) {
                 decks.put(fcd.getDeckID(), fcd);
                 deckList.add(fcd);
             }
@@ -81,12 +84,12 @@ public class JsonLoadSave {
         File file;
         ObjectMapper mapper = new ObjectMapper();
         ArrayList<FlashCard> rList = new ArrayList<>();
-        List<FlashCard> cardList;
+        List<FlashCard> cList;
         try {
             file = new File("resources/cards.json");
 
-            cardList = mapper.readValue(file, new TypeReference<>() {});
-            for (FlashCard card : cardList) {
+            cList = mapper.readValue(file, new TypeReference<>() {});
+            for (FlashCard card : cList) {
                 decks.get(card.getDeckID()).addFlashCard(card);
                 cardList.add(card);
             }

@@ -56,21 +56,47 @@ public class JSONDeckImpl implements DeckService {
 
     @Override
     public boolean updateDeck(FlashCardDeck deck) throws SQLException {
+        for (FlashCardDeck fcd : JsonLoadSave.deckList) {
+            if (fcd.getDeckID() == deck.getDeckID()) {
+                fcd.setName(deck.getName());
+                fcd.setSubject(deck.getSubject());
+                break;
+            }
+        }
+        JsonLoadSave.repopulateObjects();
         return false;
     }
 
     @Override
     public boolean updateCard(FlashCard card) throws SQLException {
+        for (FlashCard fc: JsonLoadSave.cardList) {
+            if (fc.getCardID() == card.getCardID()) {
+                fc.setQuestion(card.getQuestion());
+                fc.setAnswer(card.getAnswer());
+                break;
+            }
+        }
+        JsonLoadSave.repopulateObjects();
         return false;
     }
 
     @Override
     public boolean addCard(FlashCard card) throws SQLException {
+        JsonLoadSave.cardList.add(card);
+
+        JsonLoadSave.repopulateObjects();
         return false;
     }
 
     @Override
     public boolean deleteCard(int cardID) throws SQLException {
+        for (int i = 0; i < JsonLoadSave.cardList.size(); i++) {
+            if (JsonLoadSave.cardList.get(i).getCardID() == cardID) {
+                JsonLoadSave.cardList.remove(i);
+                break;
+            }
+        }
+        JsonLoadSave.repopulateObjects();
         return false;
     }
 }
