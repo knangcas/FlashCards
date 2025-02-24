@@ -33,8 +33,6 @@ Personal JavaFX project to get familiar with working with a few technologies.
 
 - Working on support for MongoDB.
 
-- Working on support for JSON-Based DB (for offline use, no users).
-
 
 
 ### Screenshots
