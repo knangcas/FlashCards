@@ -5,6 +5,7 @@ import flashcards.Services.DeckService;
 import flashcards.UserManagement;
 import flashcards.model.FlashCard;
 import flashcards.model.FlashCardDeck;
+import flashcards.model.exception.FlashCardDeckEmptyException;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;
@@ -32,6 +33,9 @@ public class FlashCardWindowController {
     public Button skipButton;
     @FXML
     public Button restartButton;
+    @FXML
+    public Pane noCardsPane;
+
     @FXML
     private Label progressLabel;
 
@@ -99,6 +103,7 @@ public class FlashCardWindowController {
         flashPane.setVisible(false);
         endPane.setVisible(false);
         noDecksLabel.setVisible(false);
+        noCardsPane.setVisible(false);
         if (!offline) {
             deckService = DeckService.getInstance(MainWrapper.SERVICE);
         } else {
@@ -245,8 +250,8 @@ public class FlashCardWindowController {
 
         try {
             deck = deckService.getDeck(deckIdMap.get(deckList.getSelectionModel().getSelectedItem()));
-            if (deck.getSize() == 0) {
-
+            if (deck.isEmpty()) {
+                throw new FlashCardDeckEmptyException();
             }
             deckNameLabel.setText(deck.getName());
             contentLabel.setText(deck.getCard().getQuestion());
@@ -259,13 +264,17 @@ public class FlashCardWindowController {
             if (deck.getSubject() != null) {
                 deckSubjectLabel.setText(deck.getSubject());
             }
+            selectDeckPane.setVisible(false);
+            flashPane.setVisible(true);
         }
         catch (SQLException e) {
             e.printStackTrace();
+        } catch (FlashCardDeckEmptyException fce) {
+            selectDeckPane.setVisible(false);
+            noCardsPane.setVisible(true);
         }
 
-        selectDeckPane.setVisible(false);
-        flashPane.setVisible(true);
+
 
     }
 
@@ -286,5 +295,12 @@ public class FlashCardWindowController {
         currentCard = deck.getCard();
         endPane.setVisible(false);
         flashPane.setVisible(true);
+    }
+
+
+
+    public void noCardsBack(ActionEvent actionEvent) {
+        selectDeckPane.setVisible(true);
+        noCardsPane.setVisible(false);
     }
 }

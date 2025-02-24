@@ -57,5 +57,11 @@
             <Button layoutX="395.0" layoutY="186.0" mnemonicParsing="false" onAction="#selectNewDeck" prefHeight="27.0" prefWidth="126.0" text="Select New Deck" />
          </children>
       </Pane>
+      <Pane fx:id="noCardsPane" layoutY="116.0" prefHeight="533.0" prefWidth="993.0">
+         <children>
+            <Label layoutX="316.0" layoutY="195.0" prefHeight="32.0" prefWidth="426.0" styleClass="text" text="Selected deck contains 0 cards. Add cards in deck management." textAlignment="CENTER" />
+            <Button fx:id="noCardsBackButton" layoutX="425.0" layoutY="227.0" mnemonicParsing="false" onAction="#noCardsBack" prefHeight="21.0" prefWidth="104.0" text="Back To Decks" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>
