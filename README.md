@@ -45,9 +45,10 @@ Personal JavaFX project to get familiar with working with a few technologies.
 
 ![Screenshot4](https://github.com/knangcas/FlashCards/blob/main/Screenshots/ss4.png?raw=true)
 
-![Screenshot5](https://github.com/knangcas/FlashCards/blob/main/Screenshots/ss5.png?raw=true)
+![Screenshot5](https://github.com/knangcas/FlashCards/blob/main/Screenshots/ss9.png?raw=true)
 
 ![Screenshot6](https://github.com/knangcas/FlashCards/blob/main/Screenshots/ss6.png?raw=true)
+
 
 
 Uses 
