@@ -1,4 +1,4 @@
-# FlashCard application.
+# FlashCard application made using JavaFX. 
 ## Currently in progress.
 
 ### Last Updated
